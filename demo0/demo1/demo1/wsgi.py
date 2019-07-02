@@ -1,4 +1,5 @@
 """
+项目发布需要使用到WSGI协议
 WSGI config for demo1 project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
