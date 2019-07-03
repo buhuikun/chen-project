@@ -16,7 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url,include
 
+
+
+# 绑定路由
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # （项目应用路由， 绑定应用路由下的子路由）
+    url('', include('booktest.urls')),
 ]

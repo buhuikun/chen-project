@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详情页</title>
+</head>
+<body>
+<h1>详情页</h1>
+<a href="/">首页</a>
+<br>
+ <b>书名：</b>《{{ book }}》
+{% if book.heroinfo_set.all %}
+<ul>{% for hero in book.heroinfo_set.all %}
+    <li>
+        <b>人物：</b>{{ hero }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<b>没有人物</b>
+{% endif %}
+</body>
+</html>
