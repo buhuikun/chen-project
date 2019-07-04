@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, reverse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .models import HeroInfo, BookInfo
 # MVT 中核心V视图
@@ -40,3 +40,13 @@ def detail(request, id):
     # return HttpResponse(resutl)
     book = BookInfo.objects.get(pk=id)
     return render(request, 'booktest/detail.html', {'book': book})
+
+
+def deletehero(request, id):
+    hero = HeroInfo.objects.get(pk=id)
+    bookid = hero.book.id
+    hero.delete()
+    # return HttpResponseRedirect('/detail/%s/'%(bookid, ))
+    return redirect(reverse('booktest:detail', args=(bookid, )))
+
+
