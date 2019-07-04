@@ -15,7 +15,7 @@ class BookInfoAdmin(admin.ModelAdmin):
     # 过滤
     list_filter = ('title', )
     # 分页
-    list_per_page = 1
+    list_per_page = 10
     # 搜索（关键字）
     search_fields = ('title', 'name')
     # 添加book同时可以添加hero

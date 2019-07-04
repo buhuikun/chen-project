@@ -1,10 +1,17 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
+from django.views.generic import View, TemplateView
 from .models import HeroInfo, BookInfo
 # MVT 中核心V视图
 # 接收请求，处理数据，返回响应
 # Create your views here.
+
+# 类视图
+class IndexView(View):
+    def get(self, request):
+        return render(request, 'booktest/index.html', {'username': 'chen'})
+
 
 # 自定义视图函数
 def index(request):
@@ -13,6 +20,8 @@ def index(request):
     # resutl = temp1.render({'username': 'chen'})
     # return HttpResponse(resutl)
     return render(request, 'booktest/index.html', {'username': 'chen'})
+
+
 
 def list(request):
     s="""
@@ -63,9 +72,23 @@ def addhero(request,id):
     elif request.method == 'POST':
         name = request.POST.get('username')
         content = request.POST.get('content')
+        gender = request.POST.get('gender')
         hero = HeroInfo()
         hero.name = name
+        hero.gender = gender
         hero.content = content
         hero.book = book
         hero.save()
         return redirect(reverse('booktest:detail', args=(book.id, )))
+
+
+def addbook(request):
+    if request.method == "GET":
+        return render(request, 'booktest/addbook.html',{})
+    elif request.method == 'POST':
+        title = request.POST.get('title')
+        book = BookInfo()
+        book.title = title
+        book.save()
+        return redirect(reverse('booktest:list'))
+
