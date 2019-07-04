@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票首页</title>
+    <style>
+        *{
+            list-style: none;
+        }
+        .vote{
+            width: 400px;
+            margin:auto;
+            margin-top:50px;
+            height: 300px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #ab5bf5;
+        }
+        .vote h2{
+            width: 100px;
+            margin:auto;
+        }
+        .vote li{
+            margin:20px 0;
+        }
+        .vote a{
+            color: #000000;
+            font-size: 18px;
+            text-decoration: none;
+        }
+        .vote a:hover{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="vote">
+    <h2>投票</h2>
+    <ul>
+       {% for v in vote %}
+        <li><a href="{% url 'vote:vdetail' v.id %}">{{ v.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+
+
+</body>
+</html>

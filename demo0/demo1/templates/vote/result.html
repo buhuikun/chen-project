@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票结果</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+<ol class="breadcrumb">
+    <li><a href="{% url 'vote:vindex' %}">首页</a></li>
+    <li><a href="{% url 'vote:vdetail' vote.id %}">投票详情</a></li>
+    <li class="active">投票结果</li>
+
+
+</ol>
+
+
+<h3>{{ vote.title }}</h3>
+<ul>
+    {% for o in vote.option_set.all %}
+    <li>{{ o.option }} --- {{ o.num }}</li>
+    <br><br>
+    {% endfor %}
+</ul>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
