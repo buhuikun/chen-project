@@ -14,7 +14,6 @@ def vdetail(request, id):
     vote = Vote.objects.get(pk=id)
     if request.method == 'GET':
 
-        # op = vote.option_set.all()
         return render(request, 'vote/detail.html', {'vote':vote})
     elif request.method == 'POST':
         optionid = request.POST.get('optionid')
@@ -26,4 +25,7 @@ def vdetail(request, id):
 # 投票结果
 def result(request, id):
     vote = Vote.objects.get(pk=id)
-    return render(request, 'vote/result.html', {'vote':vote})
+    # locals()返回当前函数内部所有局部变量
+    # a = 1
+    # print(locals())
+    return render(request, 'vote/result.html', locals())

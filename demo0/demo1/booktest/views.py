@@ -73,12 +73,13 @@ def addhero(request,id):
         name = request.POST.get('username')
         content = request.POST.get('content')
         gender = request.POST.get('gender')
-        hero = HeroInfo()
-        hero.name = name
-        hero.gender = gender
-        hero.content = content
-        hero.book = book
-        hero.save()
+        HeroInfo.objects.addhero(name, gender, content, book)
+        # hero = HeroInfo()
+        # hero.name = name
+        # hero.gender = gender
+        # hero.content = content
+        # hero.book = book
+        # hero.save()
         return redirect(reverse('booktest:detail', args=(book.id, )))
 
 

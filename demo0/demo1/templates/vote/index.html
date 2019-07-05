@@ -11,20 +11,16 @@
             width: 400px;
             margin:auto;
             margin-top:50px;
-            height: 300px;
+            /*height: 300px;*/
             padding: 20px;
             border-radius: 10px;
             box-shadow: 1px 1px 10px #ab5bf5;
-        }
-        .vote h2{
-            width: 100px;
-            margin:auto;
         }
         .vote li{
             margin:20px 0;
         }
         .vote a{
-            color: #000000;
+            color: #000;
             font-size: 18px;
             text-decoration: none;
         }
@@ -35,10 +31,12 @@
 </head>
 <body>
 <div class="vote">
+    <div style="width:100%; text-align: center; margin-bottom: 20px;">
     <h2>投票</h2>
+    </div>
     <ul>
        {% for v in vote %}
-        <li><a href="{% url 'vote:vdetail' v.id %}">{{ v.title }}</a></li>
+        <li>{{ forloop.counter }}、<a href="{% url 'vote:vdetail' v.id %}">{{ v.title }}</a></li>
         {% endfor %}
     </ul>
 </div>
