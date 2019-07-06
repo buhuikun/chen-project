@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详情页</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .detail {
+            width: 500px;
+            margin: auto;
+            border: 1px solid #555;
+            background-color: #eee;
+            border-radius: 10px;
+            padding: 50px;
+        }
+
+        .detail h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .detail li {
+            line-height: 40px;
+            font-size: 16px;
+            margin: 20px;
+        }
+        .detail a{
+            margin:0 20px;
+        }
+        .btn-success{
+            width:100px;
+            margin-left: 500px;
+            margin-top:50px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="{% url 'booktest:index' %}">首页</a></li>
+        <li><a href="{% url 'booktest:list' %}">列表</a></li>
+        <li class="active">详情</li>
+    </ol>
+    <div class="detail">
+
+        <h2>{{ book.title }}</h2>
+        <ul>
+            {% for hero in book.heroinfo_set.all %}
+
+            <li>{{ hero.name }}---{{ hero.info }}---{{ hero.gender }}
+                <a href="{% url 'booktest:delhero' hero.id %}" class="btn btn-xs btn-danger">删除</a>
+
+            </li>
+
+            {% endfor %}
+        </ul>
+    </div>
+
+    <a class="btn btn-success" href="{% url 'booktest:addhero' book.id %}">添加人物</a>
+
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

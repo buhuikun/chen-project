@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票首页</title>
+</head>
+<body>
+
+<ul>
+    {% for question in questions %}
+
+    <li>
+        <a href="{% url 'polls:detail' question.id %}">{{ question.title }}</a>
+        <a href="{% url 'polls:delpoll' question.id %}">删除</a>
+    </li>
+
+    {% endfor %}
+
+</ul>
+
+<a href="{% url 'polls:addpoll' %}">添加投票</a>
+</body>
+</html>

@@ -1,5 +1,4 @@
-"""demo1 URL Configuration
-项目根路由：用户在浏览器中输入的网址需要和路由匹配
+"""demo3 URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -18,12 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url,include
 
-
-
-# 绑定路由
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # （项目应用路由， 绑定应用路由下的子路由）
-    url('', include('booktest1.urls', namespace='booktest1')),
-
+    url('', include('booktest.urls', namespace='booktest')),
+    url('polls/', include('polls.urls', namespace='polls')),
 ]

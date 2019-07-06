@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>结果</title>
+</head>
+<body>
+    <h2>{{ question.title }}</h2>
+    <ul>
+        {% for option in question.options_set.all %}
+        <li>
+            {{ option.choice }}---
+            {{ option.vote }}票
+        </li>
+
+        {% endfor %}
+    </ul>
+</body>
+</html>

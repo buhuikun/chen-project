@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详情页</title>
+</head>
+<body>
+
+
+<h2><a href="{% url 'polls:result' question.id %}">{{ question.title }}</a></h2>
+<form action="{% url 'polls:detail' question.id %}" method="post">
+<ul>
+    {% for option in question.options_set.all %}
+    {% if forloop.counter == 1 %}
+    <li>
+        <input type="radio" value="{{ option.id }}" checked name="optionid">
+        {{ option.choice }}
+    </li>
+    {% else %}
+    <li>
+        <input type="radio" value="{{ option.id }}" name="optionid">
+        {{ option.choice }}
+    </li>
+    {% endif %}
+
+    {% endfor %}
+</ul>
+    <input type="submit" value="投票">
+</form>
+
+</body>
+</html>

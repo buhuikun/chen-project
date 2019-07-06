@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>列表页</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        *{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .book{
+            width:400px;
+            padding:50px;
+            margin:auto;
+            border: 1px solid #555;
+            border-radius:10px;
+            background-color: #eee;
+        }
+        .book a{
+            color: #000;
+            font-size: 16px;
+            clear:both;
+
+        }
+        .book li{
+            height: 40px;
+        }
+        .book a:hover{
+            color: #f72722;
+        }
+        .btn-success{
+            width:100px;
+            margin-left: 500px;
+            margin-top:50px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+<ol class="breadcrumb">
+        <li><a href="{% url 'booktest:index' %}">首页</a></li>
+        <li class="active">列表页</li>
+</ol>
+
+
+<div class='book'>
+<ul>
+    {% for book in books %}
+    <li>
+        <a href="{% url 'booktest:detail' book.id %}" >{{ book.title }}</a>
+        -------------
+        <a href="{% url 'booktest:delbook' book.id %}">删除</a>
+    </li>
+    {% endfor %}
+</ul>
+
+</div>
+<a class='btn btn-success' href="{% url 'booktest:addbook' %}">添加书籍</a>
+
+
+
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

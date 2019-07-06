@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加问题</title>
+</head>
+<body>
+<form action="{% url 'polls:addpoll' %}" method="post">
+    <ul>
+        <li>
+            <span>添加投票</span>
+            <input type="text" name="question">
+        </li>
+        <li>
+            <span>添加选项1</span>
+            <input type="text" name="option1">
+        </li>
+        <li>
+            <span>添加选项2</span>
+            <input type="text" name="option2">
+        </li>
+    </ul>
+
+
+    <input type="submit" value="添加">
+</form>
+
+</body>
+</html>
