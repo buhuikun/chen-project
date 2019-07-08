@@ -1,16 +1,36 @@
 from django.shortcuts import render, redirect, reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.template import loader
 from django.views.generic import View, TemplateView
-from .models import HeroInfo, BookInfo
+from .models import HeroInfo, BookInfo, Ads
 # MVT 中核心V视图
 # 接收请求，处理数据，返回响应
 # Create your views here.
 
+# 一个装饰器判断是否登录
+def checklogin(fun):
+    def check(request, *args):
+        # 使用cookies
+        # username = request.COOKIES.get('username')
+        # 使用session
+        username = request.session.get('username')
+        if username:
+            return fun(request, *args)
+        else:
+            return redirect(reverse('booktest:login'))
+    return check
+
+
 # 类视图
 class IndexView(View):
     def get(self, request):
-        return render(request, 'booktest/index.html', {'username': 'chen'})
+
+        ads = Ads.objects.all()
+        # 使用cookie
+        # username = request.COOKIES.get('username')
+        # 使用session
+        username = request.session.get('username')
+        return render(request, 'booktest/index.html', {'username':username, 'ads': ads})
 
 
 # 自定义视图函数
@@ -19,18 +39,20 @@ def index(request):
     # temp1 = loader.get_template('booktest/index.html')
     # resutl = temp1.render({'username': 'chen'})
     # return HttpResponse(resutl)
+
+
     return render(request, 'booktest/index.html', {'username': 'chen'})
 
 
-
+@checklogin
 def list(request):
-    s="""
-    
-    <a href="/detail/1/">详情1</a>
-    <a href="/detail/2/">详情2</a>
-    <a href="/detail/3/">详情3</a>
-     
-    """
+    # s="""
+    #
+    # <a href="/detail/1/">详情1</a>
+    # <a href="/detail/2/">详情2</a>
+    # <a href="/detail/3/">详情3</a>
+    #
+    # """
     # return HttpResponse('<h1>项目列表页</h1>%s'%(s, ))
     # temp2 = loader.get_template('booktest/list.html')
     # books = BookInfo.objects.all()
@@ -39,6 +61,8 @@ def list(request):
     books = BookInfo.objects.all()
     return render(request, 'booktest/list.html', {'books': books})
 
+
+@checklogin
 def detail(request, id):
     # return HttpResponse('<h1>项目%s详情页</h1> <a href="/">首页</a>'%(id,))
     # temp3 = loader.get_template('booktest/detail.html')
@@ -51,6 +75,7 @@ def detail(request, id):
     return render(request, 'booktest/detail.html', {'book': book})
 
 
+@checklogin
 def deletehero(request, id):
     hero = HeroInfo.objects.get(pk=id)
     bookid = hero.book.id
@@ -59,12 +84,14 @@ def deletehero(request, id):
     return redirect(reverse('booktest:detail', args=(bookid, )))
 
 
+@checklogin
 def deletebook(request, id):
     book = BookInfo.objects.get(pk=id)
     book.delete()
     return redirect(reverse('booktest:list'))
 
 
+@checklogin
 def addhero(request,id):
     book = BookInfo.objects.get(pk=id)
     if request.method == 'GET':
@@ -83,6 +110,7 @@ def addhero(request,id):
         return redirect(reverse('booktest:detail', args=(book.id, )))
 
 
+@checklogin
 def addbook(request):
     if request.method == "GET":
         return render(request, 'booktest/addbook.html',{})
@@ -93,3 +121,26 @@ def addbook(request):
         book.save()
         return redirect(reverse('booktest:list'))
 
+
+def login(request):
+    if request.method == 'GET':
+        return render(request, 'booktest/login.html')
+    elif request.method == 'POST':
+        # 使用cookie
+        # response = redirect(reverse('booktest:index'))
+        # response.set_cookie('username', request.POST.get('username'))
+        # return response
+
+        # 使用session
+        request.session['username'] = request.POST.get('username')
+        return redirect(reverse('booktest:index'))
+
+
+def logout(request):
+    # 使用cookie
+    # res = redirect(reverse('booktest:login'))
+    # res.delete_cookie('username')
+    # return res
+
+    request.session.flush()
+    return redirect(reverse('booktest:login'))

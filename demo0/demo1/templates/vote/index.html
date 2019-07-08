@@ -33,6 +33,14 @@
 <div class="vote">
     <div style="width:100%; text-align: center; margin-bottom: 20px;">
     <h2>投票</h2>
+        {% if username %}
+        <h3>当前用户：{{ username }}</h3>
+        <a href="{% url 'vote:logout' %}" style="font-size: 14px;">退出登录</a>
+
+        {% else %}
+        <h3>未登录</h3>
+
+        {% endif %}
     </div>
     <ul>
        {% for v in vote %}

@@ -28,9 +28,11 @@ SECRET_KEY = ')b)a@8ew+9j1#-q%da6f4v&$#y=@a2kd39x&-f$6#(v3pcuq8n'
 # SECURITY WARNING: don't run with debug turned on in production!
 # 打开项目调试，生产环境中需要关掉
 DEBUG = True
+# DEBUG = False
+
 
 # 可以访问服务器的host，设为*表示全部
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -143,3 +145,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
+
+# 配置redis存储session
+SESSION_ENGINE = 'redis_sessions.session'
+SESSION_REDIS_HOST = 'localhost'
+SESSION_REDIS_POST = 6379
+SESSION_REDIS_DB = 0
+SESSION_REDIS_PASSWORD = ''
+SESSION_REDIS_PREFIX = 'session'
+
+
