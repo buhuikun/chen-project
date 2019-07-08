@@ -122,6 +122,23 @@ def addbook(request):
         return redirect(reverse('booktest:list'))
 
 
+@checklogin
+def upload(request):
+    if request.method == 'GET':
+        return render(request, 'booktest/upload.html')
+    elif request.method == 'POST':
+        # 创建实例
+        ads = Ads()
+        # 获取HTML页面数据
+        ads.desc = request.POST.get('desc')
+        ads.img = request.FILES['uploadimg']
+        ads.save()
+
+        return redirect(reverse('booktest:index'))
+
+
+
+
 def login(request):
     if request.method == 'GET':
         return render(request, 'booktest/login.html')

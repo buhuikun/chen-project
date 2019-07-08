@@ -19,6 +19,7 @@
 
     <h2>用户：<span class="user">{{ username }}</span></h2>
     <a href="{% url 'booktest:logout' %}">退出登录</a>
+    <a href="{% url 'booktest:upload' %}">上传图片</a>
 
     {% else %}
     <h4>还未登录 <a href="{% url 'booktest:login' %}">请登录</a></h4>

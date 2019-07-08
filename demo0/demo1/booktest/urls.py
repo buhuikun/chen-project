@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^addhero/(\d+)/$', views.addhero, name='addhero'),
     url(r'^addbook/$', views.addbook, name='addbook'),
     url(r'^login/$', views.login, name='login'),
-    url(r'^logout/$', views.logout, name='logout')
+    url(r'^logout/$', views.logout, name='logout'),
+    url(r'^upload/$', views.upload, name='upload'),
 
 ]
