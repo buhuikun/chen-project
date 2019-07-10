@@ -19,6 +19,11 @@ class IndexView(View):
         pagenum = request.GET.get('page')
         pagenum = 1 if not pagenum else pagenum
         page = Paginator(article, 1).get_page(pagenum)
+        if int(pagenum) >=4:
+            a = page.paginator.page_range[int(pagenum)-3:int(pagenum)+2]
+        else:
+            a = range(1, 6)
+
 
         return render(request, 'blog/index.html', locals())
 
