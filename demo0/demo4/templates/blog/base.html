@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load my_fun %}
+
 <html>
 <head>
 
@@ -10,263 +12,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- css -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="css/pace.css">
-    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="/static/css/pace.css">
+    <link rel="stylesheet" href="/static/css/custom.css">
 
     <!-- js -->
-    <script src="js/jquery-2.1.3.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/pace.min.js"></script>
-    <script src="js/modernizr.custom.js"></script>
+    <script src="/static/js/jquery-2.1.3.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/pace.min.js"></script>
+    <script src="/static/js/modernizr.custom.js"></script>
 </head>
 
 <body>
 
 
 <div id="site-header">
-	<div class="container">
-		<div class="row">
-				<div class="col-md-4 col-sm-5 col-xs-8">
-						<div class="logo">
-								<h1><a href="index.html"><b>博客实战</b></a></h1>
-						</div>
-				</div><!-- col-md-4 -->
-				<div class="col-md-8 col-sm-7 col-xs-4">
-						<nav class="main-nav" role="navigation">
-								<div class="navbar-header">
-										<button type="button" id="trigger-overlay" class="navbar-toggle">
-												<span class="ion-navicon"></span>
-										</button>
-								</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-5 col-xs-8">
+                <div class="logo">
+                    <h1><a href="{% url 'blog:index' %}"><b>博客实战</b></a></h1>
+                </div>
+            </div><!-- col-md-4 -->
+            <div class="col-md-8 col-sm-7 col-xs-4">
+                <nav class="main-nav" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" id="trigger-overlay" class="navbar-toggle">
+                            <span class="ion-navicon"></span>
+                        </button>
+                    </div>
 
-								<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-										<ul class="nav navbar-nav navbar-right">
-												<li class="cl-effect-11"><a href="index.html" data-hover="首页">首页</a></li>
-												<li class="cl-effect-11"><a href="full-width.html" data-hover="博客">博客</a></li>
-												<li class="cl-effect-11"><a href="contact.html" data-hover="联系">联系</a></li>
-										</ul>
-								</div><!-- /.navbar-collapse -->
-						</nav>
-						<div id="header-search-box">
-								<a id="search-menu" href="#"><span id="search-icon" class="ion-ios-search-strong"></span></a>
-								<div id="search-form" class="search-form">
-										<form role="search" method="get" id="searchform" action="#">
-												<input type="search" placeholder="搜索" required>
-												<button type="submit"><span class="ion-ios-search-strong"></span></button>
-										</form>
-								</div>
-						</div>
-				</div><!-- col-md-8 -->
-		</div>
-	</div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="首页">首页</a></li>
+                            <li class="cl-effect-11"><a href="{% url 'blog:list' %}" data-hover="博客">博客</a></li>
+                            <li class="cl-effect-11"><a href="#" data-hover="联系">联系</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </nav>
+                <div id="header-search-box">
+                    <a id="search-menu" href="#"><span id="search-icon" class="ion-ios-search-strong"></span></a>
+                    <div id="search-form" class="search-form">
+                        <form role="search" method="get" id="searchform" action="#">
+                            <input type="search" placeholder="搜索" required>
+                            <button type="submit"><span class="ion-ios-search-strong"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- col-md-8 -->
+        </div>
+    </div>
 </div>
 
-
-
-{% block main %}
 
 <div class="content-body">
     <div class="container">
         <div class="row">
+
+            {% block left %}
             <main class="col-md-8">
-								<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-									<!-- Indicators -->
-									<ol class="carousel-indicators">
-										<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-										<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-										<li data-target="#carousel-example-generic" data-slide-to="2"></li>
-										<li data-target="#carousel-example-generic" data-slide-to="3"></li>
-										<li data-target="#carousel-example-generic" data-slide-to="4"></li>
-										<li data-target="#carousel-example-generic" data-slide-to="5"></li>
-									</ol>
-
-									<!-- Wrapper for slides -->
-									<div class="carousel-inner" role="listbox">
-										<div class="item active">
-											<img src="img/ads/hot1.jpg" alt="...">
-											<div class="carousel-caption">
-												<h1>hot1</h1>
-											</div>
-										</div>
-										<div class="item">
-											<img src="img/ads/hot2.jpg" alt="...">
-											<div class="carousel-caption">
-												<h1>hot2</h1>
-											</div>
-										</div>
-										<div class="item">
-											<img src="img/ads/hot3.jpg" alt="...">
-											<div class="carousel-caption">
-												<h1>hot3</h1>
-											</div>
-										</div>
-										<div class="item">
-											<img src="img/ads/hot4.jpg" alt="...">
-											<div class="carousel-caption">
-												<h1>hot4</h1>
-											</div>
-										</div>
-										<div class="item">
-											<img src="img/ads/hot5.jpg" alt="...">
-											<div class="carousel-caption">
-												<h1>hot5</h1>
-											</div>
-										</div>
-										<div class="item">
-											<img src="img/ads/hot6.jpg" alt="...">
-											<div class="carousel-caption">
-												<h1>hot6</h1>
-											</div>
-										</div>
-									</div>
-
-									<!-- Controls -->
-									<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-										<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-										<span class="sr-only">Previous</span>
-									</a>
-									<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-										<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-										<span class="sr-only">Next</span>
-									</a>
-								</div>
-
-
-
-
-
-
-                <article class="post post-1">
-                    <header class="entry-header">
-                        <h1 class="entry-title">
-                            <a href="single.html">Django 博客开发入门教程：前言</a>
-                        </h1>
-                        <div class="entry-meta">
-                            <span class="post-category"><a href="#">Django 博客教程</a></span>
-                            <span class="post-date"><a href="#"><time class="entry-date"
-                                                                      datetime="2012-11-09T23:15:57+00:00">2017年5月11日</time></a></span>
-                            <span class="post-author"><a href="#">追梦人物</a></span>
-                            <span class="comments-link"><a href="#">4 评论</a></span>
-                            <span class="views-count"><a href="#">588 阅读</a></span>
-                        </div>
-                    </header>
-                    <div class="entry-content clearfix">
-                        <p>免费、中文、零基础，完整的项目，基于最新版 Django 1.10 和 Python 3.5。带你从零开始一步步开发属于自己的博客网站，帮助你以最快的速度掌握 Django
-                            开发的技巧...</p>
-                        <div class="read-more cl-effect-14">
-                            <a href="#" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="post post-2">
-                    <header class="entry-header">
-                        <h1 class="entry-title">
-                            <a href="single.html">Django 博客开发入门教程：前言</a>
-                        </h1>
-                        <div class="entry-meta">
-                            <span class="post-category"><a href="#">Django 博客教程</a></span>
-                            <span class="post-date"><a href="#"><time class="entry-date"
-                                                                      datetime="2012-11-09T23:15:57+00:00">2017年5月11日</time></a></span>
-                            <span class="post-author"><a href="#">追梦人物</a></span>
-                            <span class="comments-link"><a href="#">4 评论</a></span>
-                            <span class="views-count"><a href="#">588 阅读</a></span>
-                        </div>
-                    </header>
-                    <div class="entry-content clearfix">
-                        <p>免费、中文、零基础，完整的项目，基于最新版 Django 1.10 和 Python 3.5。带你从零开始一步步开发属于自己的博客网站，帮助你以最快的速度掌握 Django
-                            开发的技巧...</p>
-                        <div class="read-more cl-effect-14">
-                            <a href="#" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="post post-3">
-                    <header class="entry-header">
-                        <h1 class="entry-title">
-                            <a href="single.html">Django 博客开发入门教程：前言</a>
-                        </h1>
-                        <div class="entry-meta">
-                            <span class="post-category"><a href="#">Django 博客教程</a></span>
-                            <span class="post-date"><a href="#"><time class="entry-date"
-                                                                      datetime="2012-11-09T23:15:57+00:00">2017年5月11日</time></a></span>
-                            <span class="post-author"><a href="#">追梦人物</a></span>
-                            <span class="comments-link"><a href="#">4 评论</a></span>
-                            <span class="views-count"><a href="#">588 阅读</a></span>
-                        </div>
-                    </header>
-                    <div class="entry-content clearfix">
-                        <p>免费、中文、零基础，完整的项目，基于最新版 Django 1.10 和 Python 3.5。带你从零开始一步步开发属于自己的博客网站，帮助你以最快的速度掌握 Django
-                            开发的技巧...</p>
-                        <div class="read-more cl-effect-14">
-                            <a href="#" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="post post-4">
-                    <header class="entry-header">
-                        <h1 class="entry-title">
-                            <a href="single.html">Django 博客开发入门教程：前言</a>
-                        </h1>
-                        <div class="entry-meta">
-                            <span class="post-category"><a href="#">Django 博客教程</a></span>
-                            <span class="post-date"><a href="#"><time class="entry-date"
-                                                                      datetime="2012-11-09T23:15:57+00:00">2017年5月11日</time></a></span>
-                            <span class="post-author"><a href="#">追梦人物</a></span>
-                            <span class="comments-link"><a href="#">4 评论</a></span>
-                            <span class="views-count"><a href="#">588 阅读</a></span>
-                        </div>
-                    </header>
-                    <div class="entry-content clearfix">
-                        <p>免费、中文、零基础，完整的项目，基于最新版 Django 1.10 和 Python 3.5。带你从零开始一步步开发属于自己的博客网站，帮助你以最快的速度掌握 Django
-                            开发的技巧...</p>
-                        <div class="read-more cl-effect-14">
-                            <a href="#" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
-                        </div>
-                    </div>
-                </article>
-                <!-- 简单分页效果
-                <div class="pagination-simple">
-                    <a href="#">上一页</a>
-                    <span class="current">第 6 页 / 共 11 页</span>
-                    <a href="#">下一页</a>
-                </div>
-                -->
-                <div class="pagination col-md-11">
-                    <ul>
-                        <li class="col-md-2"><a href="">上一页</a></li>
-                        <li class="col-md-1"><a href="">...</a></li>
-                        <li class="col-md-1"><a href="">53</a></li>
-                        <li class="col-md-1"><a href="">54</a></li>
-                        <li class="current col-md-1"><a href="">55</a></li>
-                        <li class="col-md-1"><a href="">56</a></li>
-                        <li class="col-md-1"><a href="">57</a></li>
-                        <li class="col-md-1"><a href="">...</a></li>
-                        <li class="col-md-2"><a href="">下一页</a></li>
-                    </ul>
-                </div>
             </main>
-
             {% endblock %}
 
 
+            {% block right %}
             <aside class="col-md-4">
                 <div class="widget widget-recent-posts">
                     <h3 class="widget-title">最新文章</h3>
                     <ul>
+
+                        {% getlatestarticles 4 as latestarticles %}
+
+                        {% for a in latestarticles %}
                         <li>
-                            <a href="#">Django 博客开发入门教程：前言</a>
+                            <a href="{% url 'blog:single' a.id %}">{{ a.title }}</a>
                         </li>
-                        <li>
-                            <a href="#">Django 博客使用 Markdown 自动生成文章目录</a>
-                        </li>
-                        <li>
-                            <a href="#">部署 Django 博客</a>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="widget widget-archives">
@@ -287,15 +109,15 @@
                 <div class="widget widget-category">
                     <h3 class="widget-title">分类</h3>
                     <ul>
+
+                        {% getcategory as category %}
+
+                        {% for c in category %}
                         <li>
-                            <a href="#">Django 博客教程 <span class="post-count">(13)</span></a>
+                            <a href="#">{{ c.title }}<span class="post-count"> ({{ c.article_set.count }})</span></a>
                         </li>
-                        <li>
-                            <a href="#">Python 教程 <span class="post-count">(11)</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Django 用户认证 <span class="post-count">(8)</span></a>
-                        </li>
+
+                        {% endfor %}
                     </ul>
                 </div>
 
@@ -338,12 +160,11 @@
                     <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
                 </div>
             </aside>
+            {% endblock %}
+
         </div>
     </div>
 </div>
-
-
-
 
 
 <div id="site-footer">
@@ -359,7 +180,7 @@
     </div>
 </div>
 
-<script src="js/script.js"></script>
+<script src="/static/js/script.js"></script>
 
 </body>
 </html>

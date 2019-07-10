@@ -15,12 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import url,include
+from django.conf.urls import url, include
 import xadmin
+from django.views.static import serve
+from .settings import MEDIA_ROOT
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
     url('', include('blog.urls', namespace='blog')),
-    url('comment/', include('blog.urls', namespace='blog'))
+    url('comment/', include('blog.urls', namespace='comment')),
+    # 用于加载上传类似轮播图的静态文件
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
+    url('ueditor/', include('DjangoUeditor.urls')),
+
 ]
