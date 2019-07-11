@@ -8,81 +8,142 @@
 {% block left %}
 <main class="col-md-8">
 
-<article class="post post-1">
-    <header class="entry-header">
-        <h1 class="entry-title">{{ article.title }}</h1>
-        <div class="entry-meta">
-            <span class="post-category"><a href="#">{{ article.category }}</a></span>
-            <span class="post-date"><a href="#"><time class="entry-date"
-                                                      datetime="2012-11-09T23:15:57+00:00">2017年5月11日</time></a></span>
-            <span class="post-author"><a href="#">{{ article.author }}</a></span>
-            <span class="comments-link"><a href="#">{{ article.comment_set.count }} 评论</a></span>
-            <span class="views-count"><a href="{% url 'blog:single' article.id %}">{{ article.views }} 阅读</a></span>
+    <article class="post post-{{ article.id }}">
+        <header class="entry-header">
+            <h1 class="entry-title">{{ article.title }}</h1>
+            <div class="entry-meta">
+                <span class="post-category"><a href="#">{{ article.category }}</a></span>
+                <span class="post-date"><a href="#"><time class="entry-date"
+                                                          datetime="2012-11-09T23:15:57+00:00">{{ article.create_time }}</time></a></span>
+                <span class="post-author"><a href="#">{{ article.author }}</a></span>
+                <span class="comments-link"><a href="#">{{ article.comment_set.count }} 评论</a></span>
+                <span class="views-count"><a href="{% url 'blog:single' article.id %}">{{ article.views }} 阅读</a></span>
+            </div>
+        </header>
+        <div class="entry-content clearfix">
+            {{ article.body|safe }}
         </div>
-    </header>
-    <div class="entry-content clearfix">
-        {{ article.body|safe }}
-    </div>
-</article>
-<section class="comment-area" id="comment-area">
-    <hr>
-    <h3>发表评论</h3>
-    <form action="#" method="post" class="comment-form">
-        <div class="row">
-            <div class="col-md-4">
-                <label for="id_name">名字：</label>
-                <input type="text" id="id_name" name="name" required>
-            </div>
-            <div class="col-md-4">
-                <label for="id_email">邮箱：</label>
-                <input type="email" id="id_email" name="email" required>
-            </div>
-            <div class="col-md-4">
-                <label for="id_url">网址：</label>
-                <input type="text" id="id_url" name="url">
-            </div>
-            <div class="col-md-12">
-                <label for="id_comment">评论：</label>
-                <textarea name="comment" id="id_comment" required></textarea>
-                <button type="submit" class="comment-btn">发表</button>
-            </div>
-        </div>    <!-- row -->
-    </form>
-    <div class="comment-list-panel">
-        <h3>评论列表，共 <span>4</span> 条评论</h3>
-        <ul class="comment-list list-unstyled">
-            <li class="comment-item">
-                <span class="nickname">追梦人物</span>
-                <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月12日 14:56</time>
-                <div class="text">
-                    文章观点又有道理又符合人性，这才是真正为了表达观点而写，不是为了迎合某某知名人士粉丝而写。我觉得如果琼瑶是前妻，生了三孩子后被一不知名的女人挖了墙角，我不信谁会说那个女人是追求真爱，说同情琼瑶骂小三的女人都是弱者。
+    </article>
+
+
+    {% comment %}
+    <section class="comment-area" id="comment-area">
+        <hr>
+        <h3>发表评论</h3>
+        <form action="#" method="post" class="comment-form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="id_name">名字：</label>
+                    {{ cf.name }}
                 </div>
-            </li>
-            <li class="comment-item">
-                <span class="nickname">zmrenwu</span>
-                <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月11日 23:56</time>
-                <div class="text">
-                    本能有可能会冲破格局，但格局有时候也会拘住本能。
+                <div class="col-md-4">
+                    <label for="id_email">邮箱：</label>
+                    {{ cf.email }}
                 </div>
-            </li>
-            <li class="comment-item">
-                <span class="nickname">蝙蝠侠</span>
-                <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月9日 8:56</time>
-                <div class="text">
-                    其实真理一般是属于沉默的大多数的。那些偏激的观点只能吸引那些同样偏激的人。前几年琼瑶告于妈抄袭，大家都表示大快人心，说明吃瓜观众都只是就事论事，并不是对琼瑶有偏见。
+                <div class="col-md-4">
+                    <label for="id_url">网址：</label>
+                    {{ cf.url }}
                 </div>
-            </li>
-            <li class="comment-item">
-                <span class="nickname">长江七号</span>
-                <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年2月12日 12:56</time>
-                <div class="text">
-                    观点我很喜欢！就是哎嘛本来一清二楚的，来个小三小四乱七八糟一团乱麻夹缠不清，简直麻烦要死
+                <div class="col-md-12">
+                    <label for="id_comment">评论：</label>
+                    {{ cf.content }}
+                    <button type="submit" class="comment-btn">发表</button>
                 </div>
-            </li>
-        </ul>
-    </div>
-</section>
+            </div>    <!-- row -->
+        </form>
+        <div class="comment-list-panel">
+            <h3>评论列表，共 <span>{{ article.comment_set.count }}</span> 条评论</h3>
+            <ul class="comment-list list-unstyled">
+                {% for comment in article.comment_set.all %}
+                <li class="comment-item">
+                    <span class="nickname">{{ comment.name }}</span>
+                    <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">{{ comment.create_time }}</time>
+                    <div class="text">
+                        {{ comment.content }}
+                    </div>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </section>
+
+    {% endcomment %}
+
+
+    <section class="comment-area" id="comment-area">
+        <hr>
+        <h3>发表评论</h3>
+        <div action="#" method="post" class="comment-form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="id_name">名字：</label>
+                    {{ cf.name }}
+                </div>
+                <div class="col-md-4">
+                    <label for="id_email">邮箱：</label>
+                    {{ cf.email }}
+                </div>
+                <div class="col-md-4">
+                    <label for="id_url">网址：</label>
+                    {{ cf.url }}
+                </div>
+                <div class="col-md-12">
+                    <label for="id_comment">评论：</label>
+                    {{ cf.content }}
+                    <button id="btn-commit" class="comment-btn">发表</button>
+                </div>
+            </div>    <!-- row -->
+        </div>
+        <div class="comment-list-panel">
+            <h3>评论列表，共 <span id="com_num">{{ article.comment_set.count }}</span> 条评论</h3>
+            <ul class="comment-list list-unstyled" id="comment_list">
+                {% for comment in article.comment_set.all %}
+                <li class="comment-item">
+                    <span class="nickname">{{ comment.name }}</span>
+                    <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">{{ comment.create_time }}</time>
+                    <div class="text">
+                        {{ comment.content }}
+                    </div>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </section>
 </main>
+
+<script>
+    $(function () {
+        $("#btn-commit").click(function () {
+            $.ajax({
+                url: '{% url "comment:addcomment" article.id %}',
+                type: 'post',
+                data: {
+                    'name': $('#id_name').val(),
+                    'email': $('#id_email').val(),
+                    'url': $('#id_url').val(),
+                    'content': $('#id_content').val(),
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function (data) {
+                    $("#com_num").text(data.com_num);
+                    $("#comment_list").append(
+                        '<li class="comment-item">\n' +
+                        '                    <span class="nickname">'+ data.name +'</span>\n' +
+                        '                    <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">'+data.create_time +'</time>\n' +
+                        '                    <div class="text">\n' +
+                        '                        '+data.content +'\n' +
+                        '                    </div>\n' +
+                        '                </li>')
+                }
+            })
+        })
+    })
+</script>
+
 
 {% endblock %}
 

@@ -47,7 +47,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="首页">首页</a></li>
                             <li class="cl-effect-11"><a href="{% url 'blog:list' %}" data-hover="博客">博客</a></li>
-                            <li class="cl-effect-11"><a href="#" data-hover="联系">联系</a></li>
+                            <li class="cl-effect-11"><a href="{% url 'blog:contact' %}" data-hover="联系">联系</a></li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </nav>
@@ -94,15 +94,15 @@
                 <div class="widget widget-archives">
                     <h3 class="widget-title">归档</h3>
                     <ul>
+
+                        {% gettimes as times %}
+                        {% for t in times %}
                         <li>
-                            <a href="#">2017 年 5 月</a>
+                            <a href="{% url 'blog:archives' t.year t.month %}">{{ t.year }} 年 {{ t.month }} 月</a>
                         </li>
-                        <li>
-                            <a href="#">2017 年 4 月</a>
-                        </li>
-                        <li>
-                            <a href="#">2017 年 3 月</a>
-                        </li>
+
+                        {% endfor %}
+
                     </ul>
                 </div>
 
@@ -114,7 +114,7 @@
 
                         {% for c in category %}
                         <li>
-                            <a href="#">{{ c.title }}<span class="post-count"> ({{ c.article_set.count }})</span></a>
+                            <a href="{% url 'blog:category' c.id %}">{{ c.title }}<span class="post-count"> ({{ c.article_set.count }})</span></a>
                         </li>
 
                         {% endfor %}
@@ -124,40 +124,18 @@
                 <div class="widget widget-tag-cloud">
                     <h3 class="widget-title">标签云</h3>
                     <ul>
+                        {% gettags as tags %}
+
+                        {% for tag in tags %}
                         <li>
-                            <a href="#">Django</a>
+                            <a href="{% url 'blog:tags' tag.id %}">{{ tag.title }}</a>
                         </li>
-                        <li>
-                            <a href="#">Python</a>
-                        </li>
-                        <li>
-                            <a href="#">Java</a>
-                        </li>
-                        <li>
-                            <a href="#">笔记</a>
-                        </li>
-                        <li>
-                            <a href="#">文档</a>
-                        </li>
-                        <li>
-                            <a href="#">AngularJS</a>
-                        </li>
-                        <li>
-                            <a href="#">CSS</a>
-                        </li>
-                        <li>
-                            <a href="#">JavaScript</a>
-                        </li>
-                        <li>
-                            <a href="#">Snippet</a>
-                        </li>
-                        <li>
-                            <a href="#">jQuery</a>
-                        </li>
+                        {% endfor %}
+
                     </ul>
                 </div>
                 <div class="rss">
-                    <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+                    <a href="{% url 'blog:rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
                 </div>
             </aside>
             {% endblock %}
@@ -172,8 +150,8 @@
         <div class="row">
             <div class="col-md-12">
                 <p class="copyright">&copy 2019 - 采集自<a href="http://www.cssmoban.com/"
-                                                        target="_blank" title="zzy0371">zzy0371</a>
-                    - 由<a href="https://github.com/" title="github" target="_blank">zzy0371</a>修改
+                                                        target="_blank" title="zzy0371">chen</a>
+                    - 由<a href="https://github.com/Freedom-Chen/chen-project" title="github" target="_blank">chen</a>修改
                 </p>
             </div>
         </div>

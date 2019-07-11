@@ -9,3 +9,7 @@ class Comment(models.Model):
     content = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return self.article

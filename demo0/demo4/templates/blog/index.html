@@ -7,9 +7,10 @@
 
 {% block left %}
 <main class="col-md-8">
-
+{% if page.number == 1 %}
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
+
         <ol class="carousel-indicators">
             {% for a in ads %}
             {% if forloop.counter == 1 %}
@@ -42,7 +43,6 @@
                 </div>
             </div>
             {% endif %}
-
             {% endfor %}
         </div>
 
@@ -56,6 +56,8 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
+{% endif %}
+
 
     {% for article in page.object_list %}
     <article class="post post-1">
@@ -73,7 +75,7 @@
             </div>
         </header>
         <div class="entry-content clearfix">
-            <p>{{ article.body|safe }}</p>
+            <p>{{ article.body|striptags|truncatechars:50 }}</p>
             <div class="read-more cl-effect-14">
                 <a href="{% url 'blog:single' article.id %}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
             </div>
@@ -85,16 +87,16 @@
     <div class="pagination col-md-11">
         <ul>
             {% if page.has_previous %}
-            <li class="col-md-2"><a href="/?page={{ page.previous_page_number }}">上一页</a></li>
+            <li class="col-md-2"><a href="?page={{ page.previous_page_number }}">上一页</a></li>
             {% endif %}
 
             {% if page.paginator.num_pages < 5 %}
 
                 {% for p in page.paginator.page_range %}
                     {% if p == page.number %}
-                    <li class="current col-md-1"><a href="/?page={{ p }}">{{ p }}</a></li>
+                    <li class="current col-md-1"><a href="?page={{ p }}">{{ p }}</a></li>
                     {% else %}
-                    <li class="col-md-1"><a href="/?page={{ p }}">{{ p }}</a></li>
+                    <li class="col-md-1"><a href="?page={{ p }}">{{ p }}</a></li>
                     {% endif %}
 
                 {% endfor %}
@@ -104,9 +106,9 @@
                 {% for p in a %}
 
                     {% if p == page.number %}
-                    <li class="current col-md-1"><a href="/?page={{ p }}">{{ p }}</a></li>
+                    <li class="current col-md-1"><a href="?page={{ p }}">{{ p }}</a></li>
                     {% else %}
-                    <li class="col-md-1"><a href="/?page={{ p }}">{{ p }}</a></li>
+                    <li class="col-md-1"><a href="?page={{ p }}">{{ p }}</a></li>
                     {% endif %}
 
                 {% endfor %}
@@ -114,11 +116,13 @@
             {% endif %}
 
             {% if page.has_next %}
-            <li class="col-md-2"><a href="/?page={{ page.next_page_number }}">下一页</a></li>
+            <li class="col-md-2"><a href="?page={{ page.next_page_number }}">下一页</a></li>
             {% endif %}
         </ul>
     </div>
 
 </main>
+
+
 {% endblock %}
 
