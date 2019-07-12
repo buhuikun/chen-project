@@ -28,5 +28,6 @@ urlpatterns = [
     # 用于加载上传类似轮播图的静态文件
     url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
     url('ueditor/', include('DjangoUeditor.urls')),
+    url('search/', include('haystack.urls')),
 
 ]

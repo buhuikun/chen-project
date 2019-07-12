@@ -33,3 +33,15 @@ def gettimes():
 @register.simple_tag
 def gettags():
     return Tag.objects.all()
+
+
+# 分页
+@register.simple_tag
+def getpagea(pagenum, page):
+    if int(pagenum) >= 4:
+        a = page.paginator.page_range[int(pagenum) - 3:int(pagenum) + 2]
+    else:
+        a = range(1, 6)
+    return  a
+
+

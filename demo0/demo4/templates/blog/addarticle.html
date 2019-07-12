@@ -71,7 +71,11 @@
                 <form action="" method="post">
                     {% csrf_token %}
                     {{ af.title }}
-                    {{ af.body }}
+                    {{ af.body }}<br><br>
+                    <span>分类：</span>
+
+                    {{ af.category }}
+                    <br><br>
                     <div class="col-md-4 col-md-offset-4">
                         <input type="submit" value="添加" class="form-control">
                     </div>

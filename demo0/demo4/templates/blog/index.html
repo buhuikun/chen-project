@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load my_fun %}
 
 {% block title %}
 <title>首页</title>
@@ -66,7 +67,7 @@
                 <a href="{% url 'blog:single' article.id %}">{{ article.title }}</a>
             </h1>
             <div class="entry-meta">
-                <span class="post-category"><a href="#">{{ article.category }}</a></span>
+                <span class="post-category"><a href="{% url 'blog:category' article.category.id %}">{{ article.category }}</a></span>
                 <span class="post-date"><a href="#"><time class="entry-date"
                                                           datetime="2012-11-09T23:15:57+00:00">{{ article.create_time }}</time></a></span>
                 <span class="post-author"><a href="#">{{ article.author }}</a></span>
@@ -103,7 +104,8 @@
 
             {% else %}
 
-                {% for p in a %}
+                {% getpagea page.number page as b %}
+                {% for p in b %}
 
                     {% if p == page.number %}
                     <li class="current col-md-1"><a href="?page={{ p }}">{{ p }}</a></li>

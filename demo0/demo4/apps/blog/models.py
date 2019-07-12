@@ -28,6 +28,15 @@ class Tag(models.Model):
         return self.title
 
 
+class BlogUser(models.Model):
+    username = models.CharField(max_length=20)
+    password = models.CharField(max_length=20)
+    email = models.EmailField(default='123@qq.com')
+
+    def __str__(self):
+        return self.username
+
+
 class Article(models.Model):
     title = models.CharField(max_length=50)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)

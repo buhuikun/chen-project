@@ -44,9 +44,13 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'DjangoUeditor',
+    'haystack',
 ]
 
 MIDDLEWARE = [
+    # 用于redis缓存整个网站必须放在中间件第一个
+    # 'django.middleware.cache.UpdateCacheMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,6 +58,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'demo4.simplemiddleware.SimpleMiddleware',
+    # 自己新建中间件
+
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
+    # 用于redis缓存整个网站，必须放在最后一个
+
 ]
 
 ROOT_URLCONF = 'demo4.urls'
@@ -127,3 +137,27 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIAFILES_DIRS = [os.path.join(BASE_DIR, 'media')]
 MEDIA_URL = '/media/'
+
+# 配置全文检索whoosh引擎
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'blog.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+# 每页数量
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 3
+#
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+# 配置redis缓存
+CACHES = {
+    "default": {
+        "BACKEND": "redis_cache.cache.RedisCache",
+        "LOCATION": "localhost:6379",
+        # 默认失效时间
+        'TIMEOUT': 60,
+    },
+}
+
+

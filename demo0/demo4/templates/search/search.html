@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+{% load my_fun %}
+<html>
+<head>
+    <title>搜索结果</title>
+
+    <!-- meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="/static/css/pace.css">
+    <link rel="stylesheet" href="/static/css/custom.css">
+
+    <!-- js -->
+    <script src="/static/js/jquery-2.1.3.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/pace.min.js"></script>
+    <script src="/static/js/modernizr.custom.js"></script>
+</head>
+
+<body>
+
+<div id="site-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-5 col-xs-8">
+                <div class="logo">
+                    <h1><a href="{% url 'blog:index'%}"><b>博客实战</b></a></h1>
+                </div>
+            </div><!-- col-md-4 -->
+            <div class="col-md-8 col-sm-7 col-xs-4">
+                <nav class="main-nav" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" id="trigger-overlay" class="navbar-toggle">
+                            <span class="ion-navicon"></span>
+                        </button>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="cl-effect-11"><a href="{% url 'blog:index'%}" data-hover="首页">首页</a></li>
+                            <li class="cl-effect-11"><a href="{% url 'blog:list'%}" data-hover="博客">博客</a></li>
+                            <li class="cl-effect-11"><a href="{% url 'blog:contact'%}" data-hover="联系">联系</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </nav>
+                <div id="header-search-box">
+                    <a id="search-menu" href="#"><span id="search-icon" class="ion-ios-search-strong"></span></a>
+                    <div id="search-form" class="search-form">
+                        <form role="search" method="get" id="searchform" action="/search/">
+                            <input type="search" placeholder="搜索" required name="q">
+                            <button type="submit"><span class="ion-ios-search-strong"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- col-md-8 -->
+        </div>
+    </div>
+</div>
+<div class="content-body">
+    <div class="container">
+        <div class="row">
+            <main class="col-md-12">
+
+                {% for article in page.object_list %}
+                <article class="post post-1">
+                    <header class="entry-header">
+                        <h1 class="entry-title">
+                            <a href="{% url 'blog:single' article.object.id %}">{{ article.object.title }}</a>
+                        </h1>
+                        <div class="entry-meta">
+                            <span class="post-category"><a href="{% url 'blog:category' article.object.category.id %}">{{ article.object.category }}</a></span>
+                            <span class="post-date"><a href="#"><time class="entry-date"
+                                                                      datetime="2012-11-09T23:15:57+00:00">2017年5月11日</time></a></span>
+                            <span class="post-author"><a href="#">{{ article.object.autohr }}</a></span>
+                            <span class="comments-link"><a href="#">{{ article.object.comment_set.count }} 评论</a></span>
+                            <span class="views-count"><a href="#">{{ article.object.views }} 阅读</a></span>
+                        </div>
+                    </header>
+                    <div class="entry-content clearfix">
+                        <p>{{ article.object.body|striptags|truncatechars:50}}</p>
+                        <div class="read-more cl-effect-14">
+                            <a href="{% url 'blog:single' article.object.id %}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+
+
+                <!-- 简单分页效果
+                <div class="pagination-simple">
+                    <a href="#">上一页</a>
+                    <span class="current">第 6 页 / 共 11 页</span>
+                    <a href="#">下一页</a>
+                </div>
+                -->
+                <div class="pagination col-md-11">
+                    <ul>
+                        {% if page.has_previous %}
+                        <li class="col-md-2"><a href="?q={{ query }}&page={{ page.previous_page_number }}">上一页</a></li>
+                        {% endif %}
+
+                        {% if page.paginator.num_pages < 5 %}
+
+                        {% for p in page.paginator.page_range %}
+                        {% if p == page.number %}
+                        <li class="current col-md-1"><a href="?q={{ query }}&page={{ p }}">{{ p }}</a></li>
+                        {% else %}
+                        <li class="col-md-1"><a href="?q={{ query }}&page={{ p }}">{{ p }}</a></li>
+                        {% endif %}
+
+                        {% endfor %}
+
+                        {% else %}
+
+                        {% getpagea page.number page as b %}
+                        {% for p in b %}
+
+                        {% if p == page.number %}
+                        <li class="current col-md-1"><a href="?q={{ query }}&page={{ p }}">{{ p }}</a></li>
+                        {% else %}
+                        <li class="col-md-1"><a href="?q={{ query }}&page={{ p }}">{{ p }}</a></li>
+                        {% endif %}
+
+                        {% endfor %}
+
+                        {% endif %}
+
+                        {% if page.has_next %}
+                        <li class="col-md-2"><a href="?q={{ query }}&page={{ page.next_page_number }}">下一页</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </main>
+
+        </div>
+    </div>
+</div>
+<div id="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="copyright">&copy 2019 - 采集自<a href="http://www.cssmoban.com/"
+                                                        target="_blank" title="zzy0371">chen</a>
+                    - 由<a href="https://github.com/Freedom-Chen/chen-project" title="github" target="_blank">chen</a>修改
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/script.js"></script>
+
+</body>
+</html>

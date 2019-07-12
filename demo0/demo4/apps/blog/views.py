@@ -15,11 +15,11 @@ def getpage(request, object_list, per_num=1):
     pagenum = request.GET.get('page')
     pagenum = 1 if not pagenum else pagenum
     page = Paginator(object_list, per_num).get_page(pagenum)
-    if int(pagenum) >= 4:
-        a = page.paginator.page_range[int(pagenum) - 3:int(pagenum) + 2]
-    else:
-        a = range(1, 6)
-    return page, a
+    # if int(pagenum) >= 4:
+    #     a = page.paginator.page_range[int(pagenum) - 3:int(pagenum) + 2]
+    # else:
+    #     a = range(1, 6)
+    return page
 
 
 # 主页面
@@ -29,7 +29,7 @@ class IndexView(View):
         article = Article.objects.all()
 
         # 获取get参数当前页码，a代表显示的几个页码
-        page, a = getpage(request, article, 1)
+        page = getpage(request, article, 2)
         return render(request, 'blog/index.html', locals())
 
 
@@ -60,8 +60,8 @@ class SingleView(View):
 class ListView(View):
     def get(self, request):
         articles = Article.objects.all()
-        page, a = getpage(request, articles, 2)
-        return render(request, 'blog/list.html', {'page': page, 'a': a})
+        page= getpage(request, articles, 2)
+        return render(request, 'blog/list.html', {'page': page,})
 
 
 # 联系页面
@@ -79,7 +79,6 @@ class AddArticle(View):
         af = ArticleForm(request.POST)
         if af.is_valid():
             article = af.save(commit=False)
-            article.category = Category.objects.first()
             article.author = User.objects.first()
             article.save()
             return redirect(reverse('blog:index'))
@@ -90,7 +89,7 @@ class AddArticle(View):
 class ArchivesView(View):
     def get(self, request, year, month):
         article = Article.objects.filter(create_time__year=year, create_time__month=month)
-        page, a = getpage(request, article, 1)
+        page = getpage(request, article, 2)
         return render(request, 'blog/index.html', locals())
 
 
@@ -98,7 +97,7 @@ class CategoryView(View):
     def get(self, request, id):
         category = Category.objects.get(pk=id)
         article = category.article_set.all()
-        page, a = getpage(request, article, 1)
+        page= getpage(request, article, 2)
         return render(request, 'blog/index.html', locals())
 
 
@@ -106,5 +105,5 @@ class TagsView(View):
     def get(self, request, id):
         tags = Tag.objects.get(pk=id)
         article = tags.article_set.all()
-        page, a = getpage(request, article, 1)
+        page = getpage(request, article, 2)
         return render(request, 'blog/index.html', locals())
