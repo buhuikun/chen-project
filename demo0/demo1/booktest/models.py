@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 # MVT中的M数据模型
 # Create your models here.
 
@@ -37,3 +38,6 @@ class Ads(models.Model):
 
     def __str__(self):
         return self.desc
+
+
+

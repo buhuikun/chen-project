@@ -15,6 +15,7 @@
 <div class="container" style="text-align: center;height: 30px;">
     <h1>《{{ book.title }}》 -- 添加英雄</h1>
     <form action="{% url 'booktest:addhero' book.id %}" method="post">
+        {% csrf_token %}
         名字：<input type="text" name="username"><br><br>
 
         性别：<select name="gender" id="gender">

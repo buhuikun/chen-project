@@ -15,6 +15,7 @@
 <div class="container" style="text-align: center">
     <h1>添加书籍</h1>
     <form action="{% url 'booktest:addbook' %}" method="post">
+        {% csrf_token %}
         标题：<input type="text" name="title"><br><br>
         <input type="submit" value="添加">
     </form>

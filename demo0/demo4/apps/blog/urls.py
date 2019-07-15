@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^category/(\d+)/$', views.CategoryView.as_view(), name='category'),
     url(r'^tags/(\d+)/$', views.TagsView.as_view(), name='tags'),
     url(r'^contact/$', views.contact, name='contact'),
+    url(r'^login/$', views.login, name='login'),
+    url(r'^register/$', views.register, name='register'),
 
 
 ]

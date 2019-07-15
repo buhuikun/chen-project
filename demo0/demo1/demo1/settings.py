@@ -34,7 +34,6 @@ DEBUG = True
 # 可以访问服务器的host，设为*表示全部
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 # 注册的应用
@@ -53,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -81,7 +80,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'demo1.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -92,16 +90,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-  # 'default': {
-  #       'ENGINE': 'django.db.backends.mysql',
-  #       'NAME': 'db_django',
-  #       'USER':'root',
-  #       'PASSWORD':'root',
-  #       'HOST':'127.0.0.1',
-  #       'PORT':3306
-  #   }
+    # 'default': {
+    #       'ENGINE': 'django.db.backends.mysql',
+    #       'NAME': 'db_django',
+    #       'USER':'root',
+    #       'PASSWORD':'root',
+    #       'HOST':'127.0.0.1',
+    #       'PORT':3306
+    #   }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -121,7 +118,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -139,7 +135,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -155,4 +150,12 @@ SESSION_REDIS_DB = 0
 SESSION_REDIS_PASSWORD = ''
 SESSION_REDIS_PREFIX = 'session'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True #是否使用TLS安全传输协议(用于在两个通信应用程序之间提供保密性和数据完整性。 )
+EMAIL_USE_SSL = False #是否使用SSL加密， qq企业邮箱要求使用
+EMAIL_HOST = 'smtp.163.com' #发送邮件的邮箱 的 SMTP服务器， 这里用了163邮箱
+EMAIL_PORT = 25 #发件箱的SMTP服务器端口
+EMAIL_HOST_USER = '2271992921@qq.com' #发送邮件的邮箱地址
+EMAIL_HOST_PASSWORD = 'chen94626'
+DEFAULT_FROM_EMAIL = 'chen <xn2233796049@163.com>'
 

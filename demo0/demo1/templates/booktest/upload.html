@@ -6,7 +6,7 @@
 </head>
 <body>
 <form enctype="multipart/form-data" action="{% url 'booktest:upload' %}" method="post">
-
+{% csrf_token %}
     图片描述：<input type="text" name="desc">
     <br>
     添加图片：<input type="file" name="uploadimg">

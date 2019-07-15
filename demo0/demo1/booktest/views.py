@@ -1,11 +1,24 @@
+import io
+import random
+
+from PIL import ImageDraw, Image, ImageFont
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.template import loader
 from django.views.generic import View, TemplateView
 from .models import HeroInfo, BookInfo, Ads
+from .form import *
+from django.core.cache import cache
+from django.core.mail import send_mail
+from django.conf import settings
 # MVT 中核心V视图
 # 接收请求，处理数据，返回响应
 # Create your views here.
+
+
+
+
+
 
 # 一个装饰器判断是否登录
 def checklogin(fun):
@@ -141,7 +154,12 @@ def upload(request):
 
 def login(request):
     if request.method == 'GET':
-        return render(request, 'booktest/login.html')
+        a = ['2271992921@qq.com']
+        # send_mail('aa','12313', settings.EMAIL_HOST_USER,a)
+
+
+        lgf = LoginForm()
+        return render(request, 'booktest/login.html', {'lgf': lgf})
     elif request.method == 'POST':
         # 使用cookie
         # response = redirect(reverse('booktest:index'))
@@ -150,6 +168,9 @@ def login(request):
 
         # 使用session
         request.session['username'] = request.POST.get('username')
+        code = cache.get('rand_str').lower()
+        if request.POST.get('verifycode').lower() != code:
+            return HttpResponse('验证码错误')
         return redirect(reverse('booktest:index'))
 
 
@@ -161,3 +182,48 @@ def logout(request):
 
     request.session.flush()
     return redirect(reverse('booktest:login'))
+
+
+def verify(request):
+    # 定义变量， 用于画面的背景色、 宽、 高
+    global xy
+    bgcolor = (random.randrange(20, 100),
+               random.randrange(20, 100),
+               random.randrange(20, 100))
+    width = 100
+    height = 35
+    # 创建画面对象
+    im = Image.new('RGB', (width, height), bgcolor)
+    # 创建画笔对象
+    draw = ImageDraw.Draw(im)
+    # 调用画笔的point()函数绘制噪点
+    for i in range(0, 300):
+        xy = (random.randrange(0, width), random.randrange(0, height))
+        fill = (random.randrange(0, 255), 255, random.randrange(0, 255))
+        draw.point(xy, fill=fill)
+    # 定义验证码的备选值
+    str1 = 'ABqwertCD1iop23EcmFGasdfHIJK456LMNhjkOPQgR8S7vbn9TUVzWXxYZ0yul'
+    # 随机选取4个值作为验证码
+    rand_str = ''
+    for i in range(0, 4):
+        rand_str += str1[random.randrange(0, len(str1))]
+
+    cache.set('rand_str', rand_str)
+    # 构造字体对象
+    font = ImageFont.truetype('BAUHS93.TTF', 23)
+    fontcolor = (255, random.randrange(0, 255), random.randrange(0, 255))
+    # 绘制4个字
+    draw.text((5, 2), rand_str[0], font=font, fill=fontcolor)
+    draw.text((25, 2), rand_str[1], font=font, fill=fontcolor)
+    draw.text((50, 2), rand_str[2], font=font, fill=fontcolor)
+    draw.text((75, 2), rand_str[3], font=font, fill=fontcolor)
+    # 释放画笔
+    del draw
+    request.session['verifycode'] = rand_str
+    f = io.BytesIO()
+    im.save(f, 'png')
+    # 将内存中的图片数据返回给客户端， MIME类型为图片png
+    return HttpResponse(f.getvalue(), 'image/png')
+
+
+

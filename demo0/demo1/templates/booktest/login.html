@@ -1,15 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>登录</title>
-</head>
-<body>
-<form action="{% url 'booktest:login' %}" method="post">
-    用户名：<input type="text" name="username"><br>
-    密码：<input type="password" name="password">
-    <br>
-    <input type="submit" value="登录">
-</form>
-</body>
-</html>
+{% extends 'booktest/base.html' %}
+{% block title%}
+<title>登录</title>
+<style>
+    * {
+        list-style: none;
+    }
+</style>
+{% endblock %}
+
+{% block container %}
+<div class="container">
+    <form action="{% url 'booktest:login' %}" method="post">
+        {% csrf_token %}
+        <label for="username">用户名</label>{{ lgf.username }}<br>
+        <label for="password">密码</label>{{ lgf.password }}
+        <div>
+            <img src="/verify/" alt="" id="verifyimg">
+            <input type="text" name="verifycode">
+        </div>
+
+        <br>
+        <input type="submit" value="登录">
+    </form>
+</div>
+
+
+<script>
+    $(function () {
+
+        $('#verifyimg').click(function () {
+            $(this).attr('src', '/verify/?t=' + new Date().getTime());
+        })
+    })
+
+
+</script>
+
+
+{% endblock %}
+
+
+
+
+
+

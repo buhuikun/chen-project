@@ -1,11 +1,13 @@
+from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 
 from django.views import View
 
-from blog.forms import ArticleForm, CommentForm
+from blog.forms import ArticleForm, CommentForm, LoginForm, RegistForm
 from .models import *
 from django.core.paginator import Paginator
+from django.core.cache import cache
 
 
 # Create your views here.
@@ -20,6 +22,16 @@ def getpage(request, object_list, per_num=1):
     # else:
     #     a = range(1, 6)
     return page
+
+
+def checklogin(fun):
+    def check(request, *args):
+        username = cache.get('username')
+        if username:
+            return fun(request, *args)
+        else:
+            return redirect(reverse('blog:login'))
+    return check
 
 
 # 主页面
@@ -93,6 +105,7 @@ class ArchivesView(View):
         return render(request, 'blog/index.html', locals())
 
 
+# 分类
 class CategoryView(View):
     def get(self, request, id):
         category = Category.objects.get(pk=id)
@@ -101,9 +114,44 @@ class CategoryView(View):
         return render(request, 'blog/index.html', locals())
 
 
+# 标签
 class TagsView(View):
     def get(self, request, id):
         tags = Tag.objects.get(pk=id)
         article = tags.article_set.all()
         page = getpage(request, article, 2)
         return render(request, 'blog/index.html', locals())
+
+
+def login(request):
+    if request.method == 'GET':
+        lgf = LoginForm()
+        return render(request, 'blog/login.html', {'lgf': lgf})
+    elif request.method == 'POST':
+        lgf = LoginForm(request.POST)
+        # 判断账户密码是否有效
+        if lgf.is_valid():
+            # username = lgf.cleaned_data['username']
+            # password = lgf.cleaned_data['password']
+
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user:
+                cache.set('username', username)
+                return redirect(reverse('blog:index'))
+            else:
+                return redirect(reverse('blog:login'))
+        return redirect(reverse('blog:login', args=({'error':'账户或密码错误'})))
+
+
+def register(request):
+    if request.method == 'POST':
+        rgf = RegistForm(request.POST)
+        if rgf.is_valid():
+            user = rgf.save(commit=False)
+            user.set_password(rgf.cleaned_data['password'])
+            user.is_active = False
+            user.save()
+
+        return render(request, 'blog/login.html')

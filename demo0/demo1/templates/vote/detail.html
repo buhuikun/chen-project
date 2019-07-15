@@ -41,6 +41,7 @@
 
 <h3><a href="{% url 'vote:result' vote.id %}">{{ vote.title }}</a></h3>
 <form action="{% url 'vote:vdetail' vote.id %}" method="post">
+    {% csrf_token %}
     {% for i in vote.option_set.all %}
     {% if forloop.counter == 1 %}
 

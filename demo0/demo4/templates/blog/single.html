@@ -117,6 +117,7 @@
 
 <script>
     $(function () {
+
         $("#btn-commit").click(function () {
             $.ajax({
                 url: '{% url "comment:addcomment" article.id %}',
