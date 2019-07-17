@@ -1,0 +1,180 @@
+{% extends 'zbest/basecenter.html' %}
+
+{% block head %}
+<title>最家</title>
+<link rel="stylesheet" type="text/css" href="/static/css/public.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/myorder.css"/>
+<style>
+    #page {
+        width: 48px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        background-color: #757575;
+        color: #fff;
+        display: inline-block;
+        margin: 0 35px;
+    }
+
+</style>
+
+{% endblock %}
+
+{% block you %}
+
+
+        <div class="you fl">
+
+            <div class="my clearfix">
+                <h2 class="fl">我的订单</h2>
+                <a href="#" class="fl">请谨防钓鱼链接或诈骗电话，了解更多&gt;</a>
+            </div>
+            <div class="dlist clearfix">
+                <ul class="fl clearfix" id="wa">
+                    <li class="on"><a href="#2">全部有效订单</a></li>
+                    <li><a href="#2">待支付</a></li>
+                    <li><a href="#2l">待收货</a></li>
+                </ul>
+
+            </div>
+
+            {% for order in orders %}
+
+            {% if order.state == '已收货' %}
+            <div class="dkuang">
+                <p class="one">已收货</p>
+                <div class="word clearfix">
+                    <ul class="fl clearfix">
+                        <li>{{ order.create_time }}</li>
+                        <li>{{ user.username }}</li>
+                        <li>订单号:{{ order.orderid }}</li>
+                        <li>在线支付</li>
+                    </ul>
+                    <p class="fr">订单金额：<span>{{ order.total }}</span>元</p>
+                </div>
+                <div class="shohou clearfix">
+                    {% for good in order.ordergoods_set.all %}
+                    <div style="clear: both; padding: 10px 0;">
+                    <a href="#" class="fl"><img src="/static/media/{{ good.good.showimg }}"/></a>
+                    <p class="fl"><a href="#">{{ good.good.title }}</a><a href="#">¥{{ good.good.price }}×{{ good.number }}</a></p>
+                    </div>
+                    {% endfor %}
+                    <p class="fr">
+                        <a href="{% url 'zbest:myprod' %}">待评价</a>
+                        <a href="{% url 'zbest:orderxq' order.id %}">订单详情</a>
+                    </p>
+                </div>
+            </div>
+
+
+            {% elif order.state == '待收货' %}
+
+            <div class="dkuang clearfix deng">
+                <p class="one fl">待收货</p>
+                <div class="clearfix">
+                    <div class="fl vewwl">
+                        <a href="wuliu.html" class="ckwl">查看物流</a>
+                        <div class="wuliu">
+                            <h4>圆通速递：858888888888888</h4>
+                            <ul>
+                                <li>
+                                    <p>妥投投递并签收，已签收。签收人：本人签收</p>
+                                    <p>2016-12-03 17:30:00</p>
+                                </li>
+                                <li>
+                                    <p>深圳市南油速递营销部安排投递（投递员姓名：六六六。联系电话：14243452522;</p>
+                                    <p>2016-12-03 08:50:00</p>
+                                </li>
+                                <li>
+                                    <p>到达广东省邮政速递物流有限公司深圳航空邮件处理中心处理中心（经转）</p>
+                                    <p>2016-12-03 02:20:00</p>
+                                </li>
+                                <li>以上为最新跟踪信息<a href="wuliu.html">查看全部</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="word clearfix">
+                    <ul class="fl clearfix">
+                        <li>{{ order.create_time }}</li>
+                        <li>{{ user.username }}</li>
+                        <li>订单号:{{ order.orderid }}</li>
+                        <li>在线支付</li>
+                    </ul>
+                    <p class="fr">订单金额：<span>{{ order.total }}</span>元</p>
+                </div>
+                <div class="shohou clearfix">
+                    {% for good in order.ordergoods_set.all %}
+                    <div style="clear: both; padding: 10px 0;">
+                    <a href="#" class="fl"><img src="/static/media/{{ good.good.showimg }}"/></a>
+                    <p class="fl"><a href="#">{{ good.good.title }}</a><a href="#">¥{{ good.good.price }}×{{ good.number }}</a></p>
+                    </div>
+                    {% endfor %}
+                    <p class="fr">
+                        <a href="{% url 'zbest:confirm' order.id %}">确认收货</a>
+                        <a href="{% url 'zbest:orderxq' order.id %}">订单详情</a>
+                    </p>
+                </div>
+            </div>
+            {% elif order.state == '待支付' %}
+            <div class="dkuang deng">
+                <p class="one">待支付</p>
+                <div class="word clearfix">
+                    <ul class="fl clearfix">
+                        <li>{{ order.create_time }}</li>
+                        <li>{{ user.username }}</li>
+                        <li>订单号:{{ order.orderid }}</li>
+                        <li>在线支付</li>
+                    </ul>
+                    <p class="fr">订单金额：<span>{{ order.total }}</span>元</p>
+                </div>
+                <div class="shohou clearfix">
+                    {% for good in order.ordergoods_set.all %}
+                    <div style="clear: both; padding: 10px 0;">
+                    <a href="#" class="fl"><img src="/static/media/{{ good.good.showimg }}"/></a>
+                    <p class="fl"><a href="#">{{ good.good.title }}</a><a href="#">¥{{ good.good.price }}×{{ good.number }}</a></p>
+                    </div>
+                    {% endfor %}
+                    <p class="fr">
+                        <a href="{% url 'zbest:buy' order.id %}">立即支付</a>
+                        <a href="{% url 'zbest:orderxq' order.id %}">订单详情</a>
+                    </p>
+                </div>
+            </div>
+            {% endif %}
+
+            {% endfor %}
+
+
+        </div>
+        <div class="fenye clearfix" style="width: 290px;display:block;font-size:12px;
+        margin: 0 auto ;color: #262626;">
+
+            <a href="#"><img src="/static/img/zuo.jpg"/></a>
+            <a href="#" id="page">{{ 1 }}</a>
+            <a href="#"><img src="/static/img/you.jpg"/></a>
+
+            {% comment %}
+            {% if pages.has_previous %}
+            <a href="#"><img src="/static/img/zuo.jpg"/></a>
+            {% endif %}
+            {% for p in pages.paginator.page_range %}
+            <a href="#" id="page">{{ p }}</a>
+            {% endfor %}
+
+
+            {% if pages.has_next %}
+            <a href="#"><img src="/static/img/you.jpg"/></a>
+            {% endif %}
+            {% endcomment %}
+        </div>
+
+{% endblock %}
+
+{% block script %}
+
+<script src="/static/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/user.js" type="text/javascript" charset="utf-8"></script>
+
+{% endblock %}

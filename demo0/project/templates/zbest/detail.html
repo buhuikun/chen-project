@@ -1,0 +1,178 @@
+{% extends 'zbest/base.html' %}
+
+{% block head %}
+<title>详情页</title>
+<link rel="stylesheet" type="text/css" href="/static/css/public.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/proList.css"/>
+{% endblock %}
+
+
+{% block content %}
+<div class="address">
+    <div class="wrapper clearfix">
+        <a href="index.html">首页</a>
+        <span>/</span>
+        <a href="{% url 'zbest:list' good.category.id %}">{{ good.category }}</a>
+        <span>/</span>
+        <a href="#" class="on">{{ good.title }}</a>
+    </div>
+</div>
+<!-----------------------Detail------------------------------>
+<div class="detCon">
+    <div class="proDet wrapper">
+        <div class="proCon clearfix">
+            <div class="proImg fl">
+                <img class="det" src="/static/img/temp/proDet.jpg"/>
+                <div class="smallImg clearfix">
+                    {% for img in good.goodsimg_set.all %}
+
+                    <img src="/static/media/{{ img.img }}" data-src="/static/media/{{ img.img }}">
+
+                    {% endfor %}
+
+                </div>
+            </div>
+            <div class="fr intro">
+                <div class="title">
+                    <h4>{{ good.title }}</h4>
+                    <p>{{ good.desc }}</p>
+                    <span>￥{{ good.price }}</span>
+                </div>
+                <div class="proIntro">
+                    <p>数量</p>
+                    <div class="num clearfix">
+
+                        <img class="fl sub" src="/static/img/temp/sub.jpg">
+                        <span class="fl" contentEditable="true" id="num">{{ num }}</span>
+                        <img class="fl add" src="/static/img/temp/add.jpg">
+                        <p class="please fl">请选择商品属性!</p>
+                    </div>
+                </div>
+                <div class="btns clearfix">
+
+                    <p class="buy fl">立即购买</p>
+
+
+                    <p class="cart fr">加入购物车</p>
+                </div>
+                <sapn style="float: right; margin-top: 10px;font-size: 14px;" id="cartinfo"></sapn>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="introMsg wrapper clearfix">
+    <div class="msgL fl">
+        <div class="msgTit clearfix">
+            <a class="on">商品详情</a>
+            <a>所有评价</a>
+        </div>
+        <div class="msgAll">
+            <div class="msgImgs">
+                {% for img in good.goodsimg_set.all %}
+                <img src="/static/media/{{ img.img }}">
+                {% endfor %}
+
+            </div>
+            <div class="eva">
+                <div class="per clearfix">
+                    <img class="fl" src="/static/img/temp/per01.jpg">
+                    <div class="perR fl">
+                        <p>馨***呀</p>
+                        <p>不好意思评价晚了，产品很好，价格比玻璃品便宜，没有我担心的杂色，发货快，包装好，全5分</p>
+                        <p><span>2016年12月27日08:31</span><span>颜色分类：大中小三件套（不含花）</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="msgR fr">
+        <h4>为你推荐</h4>
+        <div class="seeList">
+            {% for o in tuijian %}
+            <a href="{% url 'zbest:detail' o.id %}">
+                <dl>
+                    <dt><img src="/static/media/{{ o.showimg }}" style="width:160px;height: 240px;"></dt>
+                    <dd>{{ o.title }}</dd>
+                    <dd>￥{{ o.price }}</dd>
+                </dl>
+            </a>
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+
+<script src="/static/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/public.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/nav.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/pro.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/cart.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    jQuery(".bottom").slide({
+        titCell: ".hd ul",
+        mainCell: ".bd .likeList",
+        autoPage: true,
+        autoPlay: false,
+        effect: "leftLoop",
+        autoPlay: true,
+        vis: 1
+    });
+
+    $(function () {
+
+        $('.btns .buy').click(function () {
+            var num = $('#num').text();
+            $.ajax({
+                url: '{% url "zbest:createorder" %}',
+                type: 'post',
+                data: {
+                    'id': '{{ good.id }}',
+                    'num': num,
+                    'csrfmiddlewaretoken': 'p9ApxfGz95dqLJufSseK2KUmJS0vVmR4ACFXSfIZ8YoL96dS308Pvr2CSbu6NBmG',
+                },
+                success: function (data) {
+                    if (data.info == 1) {
+                        window.location.href="/order/"+data.orderid+'/';
+                    }
+
+                }
+
+            })
+
+        });
+
+        $('.btns .cart').click(function () {
+            var num = $('#num').text();
+            $.ajax({
+                url: '{% url "zbest:addcart" %}',
+                type: 'post',
+                data: {
+                    'id': '{{ good.id }}',
+                    'num': num,
+                    'csrfmiddlewaretoken': 'p9ApxfGz95dqLJufSseK2KUmJS0vVmR4ACFXSfIZ8YoL96dS308Pvr2CSbu6NBmG',
+
+                },
+                success: function (data) {
+                    $('#cartinfo').text(data.info);
+
+                }
+            })
+
+
+        })
+
+    })
+
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>登录/注册</title>
+
+<link rel="stylesheet" href="/static/css/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+<body style="background-image: url('/static/img/bgl.png');">
+
+<div class="materialContainer">
+	<form action="{% url 'zbest:login' %}" method="post">
+		{% csrf_token %}
+		<div class="box">
+		<div class="title">登录</div>
+		<div class="input">
+			<label for="name">用户名</label>
+			<input type="text" name="name" id="name">
+			<span class="spin"></span>
+		</div>
+		<div class="input">
+			<label for="pass">密码</label>
+			<input type="password" name="pass" id="pass">
+			<span class="spin"></span>
+		</div>
+		<div class="button login">
+			<button id="logbtn">
+				<span>登录</span>
+				<i class="fa fa-check"></i>
+			</button>
+		</div>
+		<span style="line-height: 30px; color: red;" id="linfo">{{ error }}</span>
+
+	</div>
+	</form>
+
+
+	<form action="{% url 'zbest:register' %}" method="post">
+		{% csrf_token %}
+	<div class="overbox">
+
+		<div class="material-button alt-2">
+			<span class="shape"></span>
+		</div>
+		<div class="title">注册</div>
+		<div class="input">
+			<label for="regname">用户名</label>
+			<input type="text" name="regname" id="regname">
+			<span class="spin"></span>
+		</div>
+		<div class="input" >
+			<label for="regpass">密码</label>
+			<input type="password" name="regpass" id="regpass">
+			<span class="spin"></span>
+		</div>
+		<div class="input">
+			<label for="reregpass">确认密码</label>
+			<input type="password" name="reregpass" id="reregpass">
+			<span class="spin"></span>
+		</div>
+
+		<div class="button">
+			<button type="submit" id="regbtn">
+				<span>注册</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 10px; color: red;" id="rinfo"></span>
+			</button>
+		</div>
+	</div>
+	</form>
+
+</div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/index.js"></script>
+
+<script>
+	$(function(){
+		$('#regname').blur(function () {
+			if ($('#regname').val() == ''){
+				$("#rinfo").text('用户名不能为空');
+			}else{
+				$.ajax({
+					url: '{% url "zbest:checkuser" %}',
+					type: 'get',
+					data: {
+						'regname': $('#regname').val(),
+					},
+					success:function(data){
+						if (data.status == 0){
+							$("#rinfo").text('用户名已存在');
+						}
+					}
+
+				})
+			}
+		});
+
+
+		$('#reregpass').blur(function () {
+			if ($('#reregpass').val() != $('#regpass').val()){
+				$("#regbtn").attr('disabled','disabled');
+				$("#rinfo").text('两次密码不一致!');
+			}else {
+ 			$("#regbtn").removeAttr("disabled");
+ 			$("#rinfo").text('');
+			}
+
+		});
+
+
+
+	})
+
+
+
+
+</script>
+
+
+</body>
+</html>

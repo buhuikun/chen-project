@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8"/>
+    {% block head %}
+    <title>最家</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/public.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css"/>
+    {% endblock %}
+
+
+</head>
+<body>
+
+<div class="head">
+    <div class="wrapper clearfix">
+        <div class="clearfix" id="top">
+            <h1 class="fl"><a href="{% url 'zbest:index' %}"><img src="/static/img/logo.png"/></a></h1>
+            <div class="fr clearfix" id="top1">
+                {% if not user %}
+                <p class="fl" id="log">
+                    <a href="{% url 'zbest:login' %}" id="login">登录</a>
+                    <a href="{% url 'zbest:login' %}" id="reg">注册</a>
+                </p>
+                {% else %}
+                <p class="fl" id="log">
+                    <a href="{% url 'zbest:logout' %}" id="login">[退出登录]</a>
+                </p>
+
+                {% endif %}
+                <form action="#" method="get" class="fl">
+                    <input type="text" placeholder="热门搜索：干花花瓶"/>
+                    <input type="button"/>
+                </form>
+                <div class="btn fl clearfix">
+                    {% if user %}
+                    <a href="{% url 'zbest:center' user.id %}"><img src="/static/img/grzx.png"/></a>
+                    <a href="{% url 'zbest:cart' %}"><img src="/static/img/gwc.png"/></a>
+                    {% endif %}
+                    <a href="#" class="er1"><img src="/static/img/ewm.png"/></a>
+                    <p><a href="#"><img src="/static/img/smewm.png"/></a></p>
+                </div>
+            </div>
+        </div>
+        <ul class="clearfix" id="bott">
+            <li><a href="{% url 'zbest:index' %}">首页</a></li>
+            {% for category in categories %}
+            <li>
+                <a href="{% url 'zbest:list' category.id %}">{{ category.title }}</a>
+            </li>
+
+            {% endfor %}
+
+        </ul>
+    </div>
+</div>
+
+<div class="Bott">
+    <div class="wrapper clearfix">
+        
+        <div class="zuo fl">
+            <h3>
+                <a href="#" style="width:92px;height: 92px;display:inline-block;border-radius:50%;overflow: hidden;"><img src="/static/media/{{ user.portrait }}"/></a>
+                <p class="clearfix"><span class="fl">{{ user.username }}</span>
+                    <a href="{% url 'zbest:logout' %}"><span class="fr">[退出登录]</span></a></p>
+            </h3>
+            <div>
+                <h4>我的交易</h4>
+                <ul>
+                    <li><a href="{% url 'zbest:cart' %}">我的购物车</a></li>
+                    <li><a href="{% url 'zbest:myorder' %}">我的订单</a></li>
+                    <li><a href="{% url 'zbest:myprod' %}">评价晒单</a></li>
+                </ul>
+                <h4>个人中心</h4>
+                <ul>
+                    <li class="on"><a href="{% url 'zbest:center' user.id %}">我的中心</a></li>
+                    <li><a href="address.html">地址管理</a></li>
+                </ul>
+                <h4>账户管理</h4>
+                <ul>
+                    <li><a href="mygrxx.html">个人信息</a></li>
+                    <li><a href="remima.html">修改密码</a></li>
+                </ul>
+            </div>
+        </div>
+        {% block you %}
+
+        {% endblock %}
+    </div>
+</div>
+
+
+<div class="gotop">
+    {% if user %}
+    <a href="{% url 'zbest:cart' %}">
+        <dl>
+            <dt><img src="/static/img/gt1.png"/></dt>
+            <dd>去购<br/>物车</dd>
+
+        </dl>
+    </a>
+    <a href="{% url 'zbest:center' user.id %}">
+        <dl>
+            <dt><img src="/static/img/gt3.png"/></dt>
+            <dd>个人<br/>中心</dd>
+        </dl>
+    </a>
+
+    {% endif %}
+
+    <a href="#" class="dh">
+        <dl>
+            <dt><img src="/static/img/gt2.png"/></dt>
+            <dd>联系<br/>客服</dd>
+        </dl>
+    </a>
+
+    <a href="#" class="toptop" style="display: none">
+        <dl>
+            <dt><img src="/static/img/gt4.png"/></dt>
+            <dd>返回<br/>顶部</dd>
+        </dl>
+    </a>
+    <p>400-800-8200</p>
+</div>
+
+
+<div class="footer">
+    <div class="top">
+        <div class="wrapper">
+            <div class="clearfix">
+                <a href="#2" class="fl"><img src="/static/img/foot1.png"/></a>
+                <span class="fl">7天无理由退货</span>
+            </div>
+            <div class="clearfix">
+                <a href="#2" class="fl"><img src="/static/img/foot2.png"/></a>
+                <span class="fl">15天免费换货</span>
+            </div>
+            <div class="clearfix">
+                <a href="#2" class="fl"><img src="/static/img/foot3.png"/></a>
+                <span class="fl">满599包邮</span>
+            </div>
+            <div class="clearfix">
+                <a href="#2" class="fl"><img src="/static/img/foot4.png"/></a>
+                <span class="fl">手机特色服务</span>
+            </div>
+        </div>
+    </div>
+    <p class="dibu">最家家居&copy;2013-2017公司版权所有 京ICP备080100-44备0000111000号<br/>
+        违法和不良信息举报电话：400-800-8200，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</p>
+</div>
+
+{% block script %}
+<script src="js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/public.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/user.js" type="text/javascript" charset="utf-8"></script>
+
+{% endblock %}
+
+</body>
+</html>
