@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url('', include('zbest.urls', namespace='zbest')),
     url('comment/', include('comment.urls', namespace='comment')),
-
+    url(r'search/', include('haystack.urls')),
 ]

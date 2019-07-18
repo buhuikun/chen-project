@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'zbest',
     'comment',
+    'haystack',
 ]
 
 MIDDLEWARE = [
@@ -125,8 +126,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# MEDIAFILES_DIRS = [os.path.join(BASE_DIR, 'media')]
-# MEDIA_URL = '/media/'
+MEDIAFILES_DIRS = [os.path.join(BASE_DIR, 'static/media')]
+# MEDIA_URL = '/static/media/'
 
 # redis缓存
 CACHES = {
@@ -137,3 +138,12 @@ CACHES = {
         'TIMEOUT': 3600 * 24 * 3,
     },
 }
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+    'ENGINE': 'zbest.whoosh_cn_backend.WhooshEngine',
+    'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }}
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

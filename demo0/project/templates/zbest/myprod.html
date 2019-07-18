@@ -20,15 +20,20 @@
         </ul>
     </div>
     <div class="sx clearfix">
+
+
         <div class="clearfix">
             {% for g in goods %}
             <dl class="fl">
-                <dt><a href="#">
+                <dt><a href="{% url 'zbest:detail' g.id %}">
                     <img style="width: 160px; height: 200px;" src="/static/media/{{ g.showimg }}"/></a></dt>
-                <dd><a href="#">{{ g.title }}</a></dd>
+                <dd><a href="{% url 'zbest:detail' g.id %}">{{ g.title }}</a></dd>
                 <dd>¥{{ g.price }}</dd>
                 <dd>{{ g.comment_set.count }}人评价</dd>
-                <dd><a href="#2">评价</a></dd>
+                <dd><a href="#2" id="{{ g.id }}" class="com">评价</a>
+                    <input type="text" value="{{ g.id }}" style="display: none;">
+                </dd>
+
             </dl>
 
             {% endfor %}
@@ -40,12 +45,15 @@
 
 <!--遮罩-->
 <div class="mask"></div>
+
+
 <!--评价弹框-->
 <div class="pj">
     <div class="clearfix"><a href="#" class="fr gb"><img src="/static/img/icon4.png"/></a></div>
     <h3>商品评分</h3>
-    <form action="{% url 'comment:addcomment' 1 %}" method="get">
-        <textarea name="" rows="" cols="" placeholder="请输入评价"></textarea>
+    <form action="{% url 'comment:addcomment' 1 %}" id="commentform" method="post">
+        {% csrf_token %}
+        <textarea name="comment" rows="" cols="" placeholder="请输入评价"></textarea>
         <div class="bc">
             <input type="submit" value="保存"/>
             <input type="button" value="取消"/>
@@ -59,6 +67,16 @@
 <script src="/static/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/public.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/js/user.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    $(function () {
+        $('.com').click(function () {
+            $('#commentform').attr('action', 'comment/addcomment/'+$(this).attr('id')+'/');
+            console.log($('#commentform').attr('action'));
+        })
+    })
+
+</script>
+
 {% endblock %}
 
 

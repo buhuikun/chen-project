@@ -12,7 +12,7 @@ $(function(){
 	/*************鼠标悬浮*************/
 	$(".proList li").on('mouseenter',function(){
 		var html="";
-		html = '<p class="quick">快速浏览</p>';
+		html = '';
 		$(this).css('border','1px solid #000').append(html);
 		$(".quick").on('click',function(){
 			$(".mask").show();

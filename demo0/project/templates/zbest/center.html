@@ -11,34 +11,38 @@
 <div class="you fl">
             <div class="tx clearfix">
                 <div class="fl clearfix">
-                    <a href="#" class="fl" style="overflow: hidden;"><img src="/static/media/{{ user.portrait }}"/></a>
-                    <p class="fl"><span>{{ user.username }}</span><a href="mygrxx.html">修改个人信息></a></p>
+                    {% if user.portrait %}
+
+                    <a href="{% url 'zbest:center' %}" class="fl" style="overflow: hidden;">
+                        <img style="width: 92px;" src="/static/media/{{ user.portrait }}"/>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'zbest:center' %}" class="fl" style="overflow: hidden;">
+                        <img style="width: 92px;" src="/static/img/tx.png"/>
+                    </a>
+                    {% endif %}
+
+                    <p class="fl"><span>{{ user.nickname }}</span><a href="{% url 'zbest:mygrxx' %}">修改个人信息></a></p>
                 </div>
                 <div class="fr">{{ user.email }}</div>
             </div>
             <div class="bott">
                 <div class="clearfix">
-                    <a href="#" class="fl"><img src="/static/img/gxin1.jpg"/></a>
-                    <p class="fl"><span>待支付的订单：<strong>0</strong></span>
-                        <a href="myorderq.html">查看待支付订单></a>
+                    <a href="{% url 'zbest:myorderzt' 1 %}" class="fl"><img src="/static/img/gxin1.jpg"/></a>
+                    <p class="fl"><span>待支付的订单：<strong>{{ o1 }}</strong></span>
+                        <a href="{% url 'zbest:myorderzt' 1 %}">查看待支付订单></a>
                     </p>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="fl"><img src="/static/img/gxin2.jpg"/></a>
-                    <p class="fl"><span>待收货的订单：<strong>0</strong></span>
-                        <a href="myorderq.html">查看待收货订单></a>
+                    <a href="{% url 'zbest:myorderzt' 2 %}" class="fl"><img src="/static/img/gxin2.jpg"/></a>
+                    <p class="fl"><span>待收货的订单：<strong>{{ o2 }}</strong></span>
+                        <a href="{% url 'zbest:myorderzt' 2 %}">查看待收货订单></a>
                     </p>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="fl"><img src="/static/img/gxin3.jpg"/></a>
-                    <p class="fl"><span>待评价的订单：<strong>0</strong></span>
-                        <a href="myprod.html">查看待评价订单></a>
-                    </p>
-                </div>
-                <div class="clearfix">
-                    <a href="#" class="fl"><img src="/static/img/gxin4.jpg"/></a>
-                    <p class="fl"><span>喜欢的商品：<strong>0</strong></span>
-                        <a href="#">查看喜欢的商品></a>
+                    <a href="{% url 'zbest:myorderzt' 3 %}" class="fl"><img src="/static/img/gxin3.jpg"/></a>
+                    <p class="fl"><span>待评价的订单：<strong>{{ o3 }}</strong></span>
+                        <a href="{% url 'zbest:myorderzt' 3 %}">查看待评价订单></a>
                     </p>
                 </div>
             </div>

@@ -10,6 +10,9 @@ from django.core.cache import cache
 # Create your views here.
 
 def addcomment(request, id):
+    if request.method == "POST":
+        comment = request.POST.get('comment')
+
     return HttpResponse('添加成功')
 
 

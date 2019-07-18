@@ -1,9 +1,9 @@
 {% extends 'zbest/base.html' %}
-    {% block head %}
-    <title>最家</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/public.css"/>
-    <link rel="stylesheet" type="text/css" href="/static/css/index.css"/>
-    {% endblock %}
+{% block head %}
+<title>最家</title>
+<link rel="stylesheet" type="text/css" href="/static/css/public.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/index.css"/>
+{% endblock %}
 
 
 {% block content %}
@@ -38,48 +38,36 @@
     <div class="wrapper">
         <h2><img src="/static/img/ih1.jpg"/></h2>
         <div class="bott clearfix">
-            <a href="proDetail.html"><img src="/static/img/n4.jpg"/>
+            {% for o in chaungyi %}
+
+            {% if forloop.counter == 3 %}
+            <a href="{% url 'zbest:detail' o.id %}">
+                <img style="width: 545px;height: 310px;" src="/static/media/{{ o.showimg }}"/>
                 <p></p></a>
-            <a href="proDetail.html"><img src="/static/img/n5.jpg"/>
+            {% else %}
+            <a href="{% url 'zbest:detail' o.id %}">
+                <img style="width: 270px;height: 310px;" src="/static/media/{{ o.showimg }}"/>
                 <p></p></a>
-            <a href="proDetail.html"><img src="/static/img/n6.jpg"/>
-                <p></p></a>
+            {% endif %}
+            {% endfor %}
+
         </div>
         <h2><img src="/static/img/ih2.jpg"/></h2>
         <div class="flower clearfix tran">
-            <a href="proDetail.html" class="clearfix">
+
+            {% for o in baijian %}
+            <a href="{% url 'zbest:detail' o.id %}" class="clearfix">
                 <dl>
                     <dt>
                         <span class="abl"></span>
-                        <img src="/static/img/flo1.jpg"/>
+                        <img style="width: 356px;" src="/static/media/{{ o.showimg }}"/>
                         <span class="abr"></span>
                     </dt>
-                    <dd>【花艺】七头美丽玫瑰仿真花束</dd>
-                    <dd><span>¥ 79.00</span></dd>
+                    <dd>{{ o.title }}</dd>
+                    <dd><span>¥ {{ o.price }}</span></dd>
                 </dl>
             </a>
-            <a href="proDetail.html">
-                <dl>
-                    <dt>
-                        <span class="abl"></span>
-                        <img src="/static/img/flo2.jpg"/>
-                        <span class="abr"></span>
-                    </dt>
-                    <dd>【花艺】七头美丽玫瑰仿真花束</dd>
-                    <dd><span>¥ 79.00</span></dd>
-                </dl>
-            </a>
-            <a href="proDetail.html">
-                <dl>
-                    <dt>
-                        <span class="abl"></span>
-                        <img src="/static/img/flo3.jpg"/>
-                        <span class="abr"></span>
-                    </dt>
-                    <dd>【花艺】七头美丽玫瑰仿真花束</dd>
-                    <dd><span>¥ 79.00</span></dd>
-                </dl>
-            </a>
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -90,50 +78,23 @@
     <div class="wrapper">
         <h2><img src="/static/img/ih3.jpg"/></h2>
         <div class="pList clearfix tran">
-            <a href="proDetail.html">
+            {% for o in bihua %}
+            <a href="{% url 'zbest:detail' o.id %}">
                 <dl>
                     <dt>
                         <span class="abl"></span>
-                        <img src="/static/img/s7.jpg"/>
+                        <img src="/static/media/{{ o.showimg }}"/>
                         <span class="abr"></span>
                     </dt>
-                    <dd>【最家】不锈钢壁饰墙饰软装</dd>
-                    <dd><span>￥688.00</span></dd>
+                    <dd>{{ o.title }}</dd>
+                    <dd><span>￥{{ o.price }}</span></dd>
                 </dl>
             </a>
-            <a href="proDetail.html">
-                <dl>
-                    <dt>
-                        <span class="abl"></span>
-                        <img src="/static/img/s10.jpg"/>
-                        <span class="abr"></span>
-                    </dt>
-                    <dd>【最家】小城动物木板画壁挂北欧</dd>
-                    <dd><span>￥188.00</span></dd>
-                </dl>
-            </a>
-            <a href="proDetail.html">
-                <dl>
-                    <dt>
-                        <span class="abl"></span>
-                        <img src="/static/img/s4.jpg"/>
-                        <span class="abr"></span>
-                    </dt>
-                    <dd>【最家】玄关假山水壁饰背景墙饰挂件创意</dd>
-                    <dd><span>￥599.00</span></dd>
-                </dl>
-            </a>
-            <a href="proDetail.html">
-                <dl>
-                    <dt>
-                        <span class="abl"></span>
-                        <img src="/static/img/s9.jpg"/>
-                        <span class="abr"></span>
-                    </dt>
-                    <dd>【最家】金属树枝壁饰铜鸟装饰品</dd>
-                    <dd><span>￥928.00</span></dd>
-                </dl>
-            </a>
+
+
+            {% endfor %}
+
+
         </div>
     </div>
 </div>

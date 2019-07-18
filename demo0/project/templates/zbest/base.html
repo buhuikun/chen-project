@@ -28,13 +28,13 @@
                 </p>
 
                 {% endif %}
-                <form action="#" method="get" class="fl">
-                    <input type="text" placeholder="热门搜索：干花花瓶"/>
-                    <input type="button"/>
+                <form action="/search/" method="get" class="fl">
+                    <input type="text" placeholder="热门搜索：简约" name="q"/>
+                    <input type="submit" />
                 </form>
                 <div class="btn fl clearfix">
                     {% if user %}
-                    <a href="{% url 'zbest:center' user.id %}"><img src="/static/img/grzx.png"/></a>
+                    <a href="{% url 'zbest:center' %}"><img src="/static/img/grzx.png"/></a>
                     <a href="{% url 'zbest:cart' %}"><img src="/static/img/gwc.png"/></a>
                     {% endif %}
                     <a href="#" class="er1"><img src="/static/img/ewm.png"/></a>
@@ -44,16 +44,18 @@
         </div>
         <ul class="clearfix" id="bott">
             <li><a href="{% url 'zbest:index' %}">首页</a></li>
-
+            <li>
+                <a href="{% url 'zbest:all' %}">所有商品</a>
+            </li>
             <li>
                 <a href="{% url 'zbest:list' 1 %}">装饰摆件</a>
             </li>
             <li>
                 <a href="{% url 'zbest:list' 2 %}">布艺软饰</a>
             </li>
-            <li><a href="paint.html">墙式壁挂</a></li>
-            <li><a href="perfume.html">蜡艺香薰</a></li>
-            <li><a href="idea.html">创意家居</a></li>
+            <li><a href="{% url 'zbest:paint' %}">墙式壁挂</a></li>
+            <li><a href="{% url 'zbest:perfume' %}">蜡艺香薰</a></li>
+            <li><a href="{% url 'zbest:idea' %}">创意家居</a></li>
 
 
         </ul>
@@ -341,7 +343,7 @@
 
         </dl>
     </a>
-    <a href="{% url 'zbest:center' user.id %}">
+    <a href="{% url 'zbest:center' %}">
         <dl>
             <dt><img src="/static/img/gt3.png"/></dt>
             <dd>个人<br/>中心</dd>

@@ -14,7 +14,9 @@ class Category(models.Model):
 class Account(models.Model):
     username = models.CharField(max_length=20)
     password = models.CharField(max_length=50)
-    portrait = models.ImageField(upload_to='portrait')
+    nickname = models.CharField(max_length=30, default='匿名用户')
+    gender = models.BooleanField(default=1)
+    portrait = models.ImageField(upload_to='portrait/')
     email = models.EmailField(default='123@a.com')
 
     def __str__(self):
