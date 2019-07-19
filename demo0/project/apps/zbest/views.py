@@ -11,6 +11,7 @@ from .models import *
 import hashlib
 from django.conf import settings
 from django.core.cache import cache
+from comment.models import *
 
 
 # 获取分页方法
@@ -141,6 +142,7 @@ class DetailView(View):
         categories = cache.get('categories')
         tuijian = good.category.goods_set.all()[:3]
         num = 1
+        comment = Comment.objects.filter(good=good).all()
         return render(request, 'zbest/detail.html', locals())
 
 
@@ -165,11 +167,11 @@ def myorder(request):
 def myorderzt(request, id):
     state = ''
     if id == '1':
-        state='未支付'
+        state = '未支付'
     elif id == '2':
-        state='待收货'
+        state = '待收货'
     elif id == '3':
-        state='已收货'
+        state = '已收货'
     orders = Order.objects.filter(state=state).order_by('-create_time')
     user = cache.get('user')
     return render(request, 'zbest/myorder.html', locals())
@@ -217,7 +219,9 @@ def buy(request, id):
     order = Order.objects.get(pk=id)
     order.state = '待收货'
     order.save()
-    return render(request, 'zbest/ok.html')
+    goods1 = Goods.objects.all().order_by('-create_time')[:5]
+    goods2 = Goods.objects.all().order_by('-create_time')[5:10]
+    return render(request, 'zbest/ok.html', {'goods1': goods1, 'goods2': goods2})
 
 
 @checklogin
@@ -289,7 +293,9 @@ def myprod(request):
     goods = []
     for orders in ordergoods:
         for order in orders.ordergoods_set.all():
-            goods.append(order.good)
+            print(order.good.comment_set.count(), 'adaaaaaaa')
+            if order.state:
+                goods.append(order)
     user = cache.get('user')
     return render(request, 'zbest/myprod.html', {'user': user, 'goods': goods})
 
@@ -337,7 +343,8 @@ def remima(request):
         else:
             info = ''
         cache.delete('info')
-        return render(request, 'zbest/remima.html', {'info': info})
+        user = cache.get('user')
+        return render(request, 'zbest/remima.html', {'info': info, 'user': user})
     elif request.method == "POST":
         user = cache.get('user')
         oldpass = request.POST.get('oldpass')
@@ -358,6 +365,11 @@ def remima(request):
         cache.delete('user')
         cache.set('info', '修改成功！')
         return redirect(reverse('zbest:remima'))
+
+
+@checklogin
+def wuliu(request, id):
+    return render(request, 'zbest/wuliu.html')
 
 
 # 验证码

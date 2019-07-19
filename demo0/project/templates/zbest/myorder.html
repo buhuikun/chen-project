@@ -73,7 +73,7 @@
                 <p class="one fl">待收货</p>
                 <div class="clearfix">
                     <div class="fl vewwl">
-                        <a href="wuliu.html" class="ckwl">查看物流</a>
+                        <a href="{% url 'zbest:wuliu' order.id %}" class="ckwl">查看物流</a>
                         <div class="wuliu">
                             <h4>圆通速递：858888888888888</h4>
                             <ul>
@@ -89,7 +89,7 @@
                                     <p>到达广东省邮政速递物流有限公司深圳航空邮件处理中心处理中心（经转）</p>
                                     <p>2016-12-03 02:20:00</p>
                                 </li>
-                                <li>以上为最新跟踪信息<a href="wuliu.html">查看全部</a></li>
+                                <li>以上为最新跟踪信息<a href="{% url 'zbest:wuliu' order.id %}">查看全部</a></li>
                             </ul>
                         </div>
                     </div>

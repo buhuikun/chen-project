@@ -75,14 +75,18 @@
 
             </div>
             <div class="eva">
+                {% for com in comment %}
+
                 <div class="per clearfix">
-                    <img class="fl" src="/static/img/temp/per01.jpg">
+                    <img style="width: 40px;border-radius: 50%" class="fl" src="/static/media/{{ com.account.portrait }}">
                     <div class="perR fl">
-                        <p>馨***呀</p>
-                        <p>不好意思评价晚了，产品很好，价格比玻璃品便宜，没有我担心的杂色，发货快，包装好，全5分</p>
-                        <p><span>2016年12月27日08:31</span><span>颜色分类：大中小三件套（不含花）</span></p>
+                        <p>{{ com.account.nickname }}</p>
+                        <p>{{ com.content }}</p>
+                        <p><span>{{ com.create_time }}</span><span>颜色分类：大中小三件套（不含花）</span></p>
                     </div>
                 </div>
+
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -169,6 +173,9 @@
 
 
         })
+
+
+
 
     })
 

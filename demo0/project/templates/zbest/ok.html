@@ -28,78 +28,57 @@
         <div class="imgCon wrapper bd">
             <div class="likeList clearfix">
                 <div>
-                    <a href="proDetail.html">
+                    {% for o in goods1 %}
+                    {% if forloop.counter == 4 %}
+
+                    <a href="{% url 'zbest:detail' o.id %}" class="last">
                         <dl>
-                            <dt><img src="/static/img/temp/like01.jpg"></dt>
-                            <dd>【最家】复古文艺风玻璃花瓶</dd>
-                            <dd>￥193.20</dd>
+                            <dt><img src="/static/media/{{ o.showimg }}"></dt>
+                            <dd> {{ o.title }}</dd>
+                            <dd>￥{{ o.price }}</dd>
                         </dl>
                     </a>
-                    <a href="proDetail.html">
+                     {% else %}
+                    <a href="{% url 'zbest:detail' o.id %}">
                         <dl>
-                            <dt><img src="/static/img/temp/like02.jpg"></dt>
-                            <dd>【最家】复古文艺风玻璃花瓶</dd>
-                            <dd>￥193.20</dd>
+                            <dt><img src="/static/media/{{ o.showimg }}"></dt>
+                            <dd> {{ o.title }}</dd>
+                            <dd>￥{{ o.price }}</dd>
                         </dl>
                     </a>
-                    <a href="proDetail.html">
-                        <dl>
-                            <dt><img src="/static/img/temp/like03.jpg"></dt>
-                            <dd>【最家】复古文艺风玻璃花瓶</dd>
-                            <dd>￥193.20</dd>
-                        </dl>
-                    </a>
-                    <a href="proDetail.html">
-                        <dl>
-                            <dt><img src="/static/img/temp/like04.jpg"></dt>
-                            <dd>【最家】复古文艺风玻璃花瓶</dd>
-                            <dd>￥193.20</dd>
-                        </dl>
-                    </a>
-                    <a href="proDetail.html" class="last">
-                        <dl>
-                            <dt><img src="/static/img/temp/like05.jpg"></dt>
-                            <dd>【最家】复古文艺风玻璃花瓶</dd>
-                            <dd>￥193.20</dd>
-                        </dl>
-                    </a>
+                    {% endif %}
+                    {% endfor %}
+
                 </div>
                 <div>
-                    <a href="proDetail.html">
+
+                    {% for o in goods2 %}
+
+                    {% if forloop.counter == 4 %}
+                    <a href="{% url 'zbest:detail' o.id %}" class="last">
                         <dl>
-                            <dt><img src="/static/img/temp/like01.jpg"></dt>
-                            <dd>【最家】复古文艺风玻璃花瓶</dd>
-                            <dd>￥193.20</dd>
+                            <dt><img src="/static/media/{{ o.showimg }}"></dt>
+                            <dd> {{ o.title }}</dd>
+                            <dd>￥{{ o.price }}</dd>
                         </dl>
                     </a>
-                    <a href="proDetail.html">
+                    {% else %}
+                    <a href="{% url 'zbest:detail' o.id %}">
                         <dl>
-                            <dt><img src="/static/img/temp/like02.jpg"></dt>
-                            <dd>【最家】复古文艺风玻璃花瓶</dd>
-                            <dd>￥193.20</dd>
+                            <dt><img src="/static/media/{{ o.showimg }}"></dt>
+                            <dd> {{ o.title }}</dd>
+                            <dd>￥{{ o.price }}</dd>
                         </dl>
                     </a>
-                    <a href="proDetail.html">
-                        <dl>
-                            <dt><img src="/static/img/temp/like03.jpg"></dt>
-                            <dd>【最家】复古文艺风玻璃花瓶</dd>
-                            <dd>￥193.20</dd>
-                        </dl>
-                    </a>
-                    <a href="proDetail.html">
-                        <dl>
-                            <dt><img src="/static/img/temp/like04.jpg"></dt>
-                            <dd>【最家】复古文艺风玻璃花瓶</dd>
-                            <dd>￥193.20</dd>
-                        </dl>
-                    </a>
-                    <a href="/static/proDetail.html" class="last">
-                        <dl>
-                            <dt><img src="/static/img/temp/like05.jpg"></dt>
-                            <dd>【最家】复古文艺风玻璃花瓶</dd>
-                            <dd>￥193.20</dd>
-                        </dl>
-                    </a>
+                    {% endif %}
+                    {% endfor %}
+
+
+
+
+
+
+
                 </div>
             </div>
         </div>

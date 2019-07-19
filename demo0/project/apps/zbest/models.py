@@ -63,3 +63,4 @@ class OrderGoods(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     good = models.ForeignKey(Goods, on_delete=models.CASCADE)
     number = models.IntegerField()
+    state = models.BooleanField(default=1)

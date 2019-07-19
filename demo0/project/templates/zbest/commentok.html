@@ -1,0 +1,43 @@
+{% extends 'zbest/base.html' %}
+
+{% block head %}
+<title>ok</title>
+<link rel="stylesheet" type="text/css" href="/static/css/public.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/proList.css"/>
+{% endblock %}
+
+{% block content %}
+
+
+<p class="ok">评价成功！剩余<span>5</span>秒<a href="{% url 'zbest:myprod' %}">返回评价页</a></p>
+
+{% endblock %}
+
+{% block script %}
+<script src="/static/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/public.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="/static/js/pro.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="/static/js/jquery.SuperSlide.2.1.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var seconds = $(".ok span").text();
+	function time(){
+		seconds--;
+		$(".ok span").text(seconds);
+		if(seconds==0){
+			window.location.href=("/myprod/")
+		}
+	}
+	setInterval(time,1000);
+
+    jQuery(".bottom").slide({
+        titCell: ".hd ul",
+        mainCell: ".bd .likeList",
+        autoPage: true,
+        autoPlay: false,
+        effect: "leftLoop",
+        autoPlay: true,
+        vis: 1
+    });
+</script>
+
+{% endblock %}

@@ -33,5 +33,6 @@ urlpatterns = [
     url(r"^remima/$", remima, name='remima'),
     url(r'^verify/$', verify, name='verify'),
     url(r'^myorderzt/(\d+)/$', myorderzt, name='myorderzt'),
+    url(r'^wuliu/(\d+)/$', wuliu, name='wuliu'),
 
 ]

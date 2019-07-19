@@ -20,7 +20,7 @@
 							{% for goods in order.ordergoods_set.all %}
 							<div class="clearfix">
 
-								<a href="#" class="fl">
+								<a href="{% url 'zbest:detail' goods.good.id %}" class="fl">
 									<img style="width: 65px;" src="/static/media/{{ goods.good.showimg }}"/></a>
 								<p class="fl"><a href="#">{{ goods.good.title }}</a>
 									<a href="#">¥{{ goods.good.price }}×{{ goods.number }}</a>
