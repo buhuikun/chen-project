@@ -15,11 +15,11 @@
     <h2>修改密码</h2>
     <form action="{% url 'zbest:remima' %}" method="post" class="remima">
         {% csrf_token %}
-        <p><span>原密码：</span><input type="password" name="oldpass" /></p>
+        <p><span>原密码：</span><input type="password" name="oldpass" style="border: 1px solid #dddddd; width: 222px; height: 12px; padding: 10px;"/></p>
         <p class="op">输入原密码</p>
-        <p><span>新密码：</span><input type="password" name="newpass" /></p>
+        <p><span>新密码：</span><input type="password" name="newpass" style="border: 1px solid #dddddd; width: 222px; height: 12px; padding: 10px;"/></p>
         <p class="op">6-16 个字符，需使用字母、数字或符号组合，不能使用纯数字、纯字母、纯符号</p>
-        <p><span>重复新密码：</span><input type="password" name="aeginpass" /></p>
+        <p><span>重复新密码：</span><input type="password" name="aeginpass" style="border: 1px solid #dddddd; width: 222px; height: 12px; padding: 10px;"/></p>
         <p class="op">请再次输入密码</p>
         <p><span>验证码：</span><input type="text" name="code" /><img id="verify" src="{% url 'zbest:verify' %}" alt=""/></p>
         <p class="op">按右图输入验证码，不区分大小写</p>

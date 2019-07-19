@@ -414,7 +414,7 @@ def verify(request):
 
     cache.set('rand_str', rand_str)
     # 构造字体对象
-    font = ImageFont.truetype('BAUHS93.TTF', 23)
+    font = ImageFont.truetype('calibrib.ttf', 23)
     fontcolor = (255, random.randrange(0, 255), random.randrange(0, 255))
     # 绘制4个字
     draw.text((5, 2), rand_str[0], font=font, fill=fontcolor)
