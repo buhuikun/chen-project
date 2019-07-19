@@ -49,11 +49,9 @@
                     </div>
                 </div>
                 <div class="btns clearfix">
-
                     <p class="buy fl">立即购买</p>
-
-
                     <p class="cart fr">加入购物车</p>
+                    {% csrf_token %}
                 </div>
                 <sapn style="float: right; margin-top: 10px;font-size: 14px;" id="cartinfo"></sapn>
             </div>
@@ -132,8 +130,8 @@
     });
 
     $(function () {
-
         $('.btns .buy').click(function () {
+
             var num = $('#num').text();
             $.ajax({
                 url: '{% url "zbest:createorder" %}',
@@ -141,7 +139,8 @@
                 data: {
                     'id': '{{ good.id }}',
                     'num': num,
-                    'csrfmiddlewaretoken': 'p9ApxfGz95dqLJufSseK2KUmJS0vVmR4ACFXSfIZ8YoL96dS308Pvr2CSbu6NBmG',
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
+                    // 'csrfmiddlewaretoken': 'p9ApxfGz95dqLJufSseK2KUmJS0vVmR4ACFXSfIZ8YoL96dS308Pvr2CSbu6NBmG',
                 },
                 success: function (data) {
                     if (data.info == 1) {
@@ -162,7 +161,8 @@
                 data: {
                     'id': '{{ good.id }}',
                     'num': num,
-                    'csrfmiddlewaretoken': 'p9ApxfGz95dqLJufSseK2KUmJS0vVmR4ACFXSfIZ8YoL96dS308Pvr2CSbu6NBmG',
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
+                    // 'csrfmiddlewaretoken': 'p9ApxfGz95dqLJufSseK2KUmJS0vVmR4ACFXSfIZ8YoL96dS308Pvr2CSbu6NBmG',
 
                 },
                 success: function (data) {

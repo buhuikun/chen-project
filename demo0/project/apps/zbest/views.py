@@ -67,18 +67,21 @@ class IndexView(View):
 
 class ListView(View):
     def get(self, request, id):
+        user = cache.get('user')
         goods = Category.objects.get(pk=id).goods_set.all()
         return render(request, 'zbest/list.html', locals())
 
 
 class AllView(View):
     def get(self, request):
+        user = cache.get('user')
         goods = Goods.objects.all()
         return render(request, 'zbest/list.html', locals())
 
 
 class PaintView(View):
     def get(self, request):
+        user = cache.get('user')
         goods = Category.objects.filter(title='墙式壁挂')[0]
         goods1 = goods.goods_set.order_by('-id')[:6]
         goods2 = goods.goods_set.order_by('-id')[6:12]
@@ -89,6 +92,7 @@ class PaintView(View):
 
 class PerfumeView(View):
     def get(self, request):
+        user = cache.get('user')
         goods = Category.objects.filter(title='蜡艺香薰')[0]
         goods1 = goods.goods_set.order_by('-id')[:6]
         goods2 = goods.goods_set.order_by('-id')[6:12]
@@ -97,6 +101,7 @@ class PerfumeView(View):
 
 class IdeaView(View):
     def get(self, request):
+        user = cache.get('user')
         goods = Category.objects.filter(title='创意家居')[0]
         goods1 = goods.goods_set.order_by('-id')[:3]
         goods2 = goods.goods_set.order_by('-id')[3:7]
@@ -136,14 +141,24 @@ def logout(request):
     return redirect(reverse('zbest:index'))
 
 
-class DetailView(View):
-    def get(self, request, id):
-        good = Goods.objects.get(pk=id)
-        categories = cache.get('categories')
-        tuijian = good.category.goods_set.all()[:3]
-        num = 1
-        comment = Comment.objects.filter(good=good).all()
-        return render(request, 'zbest/detail.html', locals())
+@checklogin
+def detail(request, id):
+    good = Goods.objects.get(pk=id)
+    categories = cache.get('categories')
+    tuijian = good.category.goods_set.all()[:3]
+    num = 1
+    comment = Comment.objects.filter(good=good).all()
+    return render(request, 'zbest/detail.html', locals())
+
+
+# class DetailView(View):
+#     def get(self, request, id):
+#         good = Goods.objects.get(pk=id)
+#         categories = cache.get('categories')
+#         tuijian = good.category.goods_set.all()[:3]
+#         num = 1
+#         comment = Comment.objects.filter(good=good).all()
+#         return render(request, 'zbest/detail.html', locals())
 
 
 @checklogin

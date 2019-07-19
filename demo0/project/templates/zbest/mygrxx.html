@@ -13,16 +13,17 @@
             <div class="gxin">
                 {% if user.portrait %}
 
-                <div class="tx"><a href="{% url 'zbest:center' %}"><img src="/static/media/{{ user.portrait }}" style="width: 92px; border-radius: 50%;"/>
+                <div class="tx"><a href="#"><img src="/static/media/{{ user.portrait }}" style="width: 92px; border-radius: 50%;"/>
                     <p id="avatar">修改头像</p></a></div>
                 <div class="xx">
                 {% else %}
 
-                <div class="tx"><a href="{% url 'zbest:center' %}"><img src="/static/img/tx.png" style="width: 92px; border-radius: 50%;"/>
+                <div class="tx"><a href="#"><img src="/static/img/tx.png" style="width: 92px; border-radius: 50%;"/>
                     <p id="avatar">修改头像</p></a></div>
+                    <div class="xx">
                 {% endif %}
 
-                    <h3 class="clearfix"><strong class="fl">基础资料</strong><a href="#" class="fr" id="edit1">编辑</a></h3>
+                    <h3 class="clearfix"><strong class="fl">{{ user.nickname }}{{ user.gender }}基础资料</strong><a href="#" class="fr" id="edit1">编辑</a></h3>
                     <div>姓名：{{ user.nickname }}</div>
                     {% if user.gender %}
 
