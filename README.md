@@ -1,3 +1,3 @@
 # chen-project
-Djangoweb开发项目仓库
-## Django
+Django——web开发项目与爬虫仓库
+## Django、爬虫
